@@ -1,0 +1,70 @@
+<div class="background">
+  <!-- 左欄按鈕 -->
+  <div class="btnClassCss">
+    <button class="btnCss">問卷列表</button><br>
+    <button class="btnCss">個人資料</button><br>
+    <button class="btnCss2">登出</button>
+  </div>
+
+  <div >
+    <!-- 搜尋區塊 -->
+    <div class="searchCss">
+      <span class="searchItem">問卷名稱</span> <input class="searchItem2">
+      <span class="searchItem">狀態</span> <input class="searchItem2">
+      <span class="searchItem">開始時間</span> <input class="searchItem2" type="date">
+      <span class="searchItem">結束時間</span> <input class="searchItem2" type="date">
+    </div>
+
+
+
+    <!-- 表格區塊 -->
+    <div class="mat-elevation-z8 ">
+      <table mat-table [dataSource]="dataSource" >
+
+        <!-- 編號 -->
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef> 編號 </th>
+          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+        </ng-container>
+
+        <!-- 名稱 -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> 名稱 </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- 狀態 -->
+        <ng-container matColumnDef="state">
+          <th mat-header-cell *matHeaderCellDef> 狀態 </th>
+          <td mat-cell *matCellDef="let element"> {{element.state}} </td>
+        </ng-container>
+
+        <!-- 開始時間 -->
+        <ng-container matColumnDef="sDate">
+          <th mat-header-cell *matHeaderCellDef> 開始時間 </th>
+          <td mat-cell *matCellDef="let element"> {{element.sDate}} </td>
+        </ng-container>
+
+        <!-- 結束時間 -->
+        <ng-container matColumnDef="eDate">
+          <th mat-header-cell *matHeaderCellDef> 結束時間 </th>
+          <td mat-cell *matCellDef="let element"> {{element.eDate}} </td>
+        </ng-container>
+
+        <!-- 結果 -->
+        <ng-container matColumnDef="result">
+          <th mat-header-cell *matHeaderCellDef> 結果 </th>
+          <td mat-cell *matCellDef="let element"> {{element.result}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                    showFirstLastButtons
+                    aria-label="Select page of periodic elements">
+      </mat-paginator>
+    </div>
+  </div>
+</div>
