@@ -1,0 +1,29 @@
+.diaTitle{
+  font-size: 17px;
+  font-weight: 500;
+  text-align: center;
+}
+.btnCss{
+  width: 140px;
+  height: 40px;
+  border-radius: 20px;
+  background: #10FC0C;
+  border: 2px solid #10FC0C;
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor:pointer;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-right: 68px;
+  &:hover {
+    color: #10FC0C;
+    background: black;
+  }
+}
+.userCss{
+  text-align: left;
+  margin-left: 20px;
+}
+

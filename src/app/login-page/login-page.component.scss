@@ -1,0 +1,115 @@
+.background{
+  width: 100%;
+  height: 100vh;
+  background-image: url("/background2.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+}
+.titleBox{
+  text-align: center;
+}
+.bodyCss{
+  width: 380px;
+  height: 450px;
+  text-align: center;
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.09);
+  margin-left: 800px;
+  margin-bottom: 100px;
+  padding: 20px 40px;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.inputCss {
+  width: 200px;
+  border: none; /* 清除所有邊框 */
+  border-bottom: 1px solid black; /* 底線樣式 */
+  padding: 10px 15px; /* 上下內距，避免文字太貼邊 */
+  font-size: 14px; /* 調整文字大小 */
+  background-color: rgba(255, 255, 255, 0.9); /* 半透明背景 */
+  letter-spacing: 2px;
+  margin-left: 15px;
+}
+
+.inputCss:focus {
+  background-color: rgba(255, 255, 255); /* 聚焦時更清晰 */
+  transition: all 0.2s ease; /* 增加動畫效果 */
+}
+
+.inputBox {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+  margin-left: 20px;
+}
+
+.inputBox label {
+  width: 65px;
+  text-align: center;
+}
+
+.inputBox2 {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: 18px;
+}
+
+.inputBox2 label {
+  width: 65px;
+  text-align: center;
+}
+
+.accountCss{
+  font-size: 13px;
+  padding-top: 35px;
+  padding-bottom: 15px;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.btnCss{
+  height: 35px;
+  width: 120px;
+  border-radius: 50px;
+  background: #064192;
+  border: 2px solid #064192;
+  color: #FFF9E6;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 70px;
+  cursor:pointer;
+
+  &:hover {
+    color: #064192;
+    background: #FFF9E6;
+  }
+}
+.btnCss2{
+  height: 35px;
+  width: 120px;
+  border-radius: 50px;
+  background: #064192;
+  border: 2px solid #064192;
+  color: #FFF9E6;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-top: 20px;
+  cursor:pointer;
+
+  &:hover {
+    color: #064192;
+    background: #FFF9E6;
+  }
+}
+
+.mat-tab {
+  color: white;
+  background-color: aliceblue;
+}

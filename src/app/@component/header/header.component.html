@@ -1,0 +1,22 @@
+<div class="background">
+  <div class="headerCss">
+    <!-- logo -->
+    <h1 class="logoCss">CHICHI</h1>
+    <span class="spacer"></span>
+
+    <!-- 導航按鈕 -->
+    @if (!isLogin) {
+    <div class="btnBox">
+      <button class="btnChoose">問卷列表</button>
+      <span>|</span>
+      <button class="btnClass" (click)="openUser()">個人資料</button>
+      <span>|</span>
+      <button class="btnClass" (click)="adminLog()">管理員登入</button>
+      <span>|</span>
+      <button class="btnClass" (click)="logOut()">登出</button>
+    </div>
+  }
+  </div>
+
+  <!-- 方塊格子 -->
+</div>

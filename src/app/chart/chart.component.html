@@ -1,0 +1,25 @@
+<div class="dateCss">
+  <span>問卷時間 : {{ theme.sDate }}</span> ~ <span>{{ theme.eDate }}</span>
+</div>
+
+<div class="themeCss">
+  <h3>主題 : {{ theme.theme }}</h3>
+  <div>
+    {{ theme.describe }}
+  </div>
+</div>
+
+
+@for (chartData of quesArray; track $index) {
+<div class="chartBox">
+  <div class="chartCss"><canvas id="{{ chartData.quesId }}"></canvas></div>
+  <div>
+    <div class="chartIdCss">{{ chartData.quesId }}. {{ chartData.quesTitle }}</div>
+    <div class="contentCss">慢慢享受: 30</div>
+    <div class="contentCss">速速吃完: 50</div>
+  </div>
+</div>
+}
+<div class="btnBox">
+  <button class="btn1Css" (click)="backPage()">上一頁</button>
+</div>

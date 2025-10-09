@@ -1,22 +1,21 @@
 <!-- 主題設計 -->
 <div class="container">
   <img class="bigImage" src="/lemon.jpg">
-  <div class="mainTitleCss">{{ theme?.mainTitle }}</div>
-  <div class="subtitleCss">{{ theme?.subtitle }} </div>
+  <div class="mainTitleCss">{{ theme.mainTitle }}</div>
+  <div class="subtitleCss">{{ theme.subtitle }}</div>
 </div>
 
 <div class="dateCss">
-  <span>問卷時間 : {{ theme?.sDate }}</span> ~ <span>{{ theme?.eDate }}</span>
+  <span>問卷時間 : {{ theme.sDate }}</span> ~ <span>{{ theme.eDate }}</span>
 </div>
 
 <div class="background">
   <div class="themeCss">
-    <h3>主題：{{ theme?.theme }}</h3>
+    <h3>主題 : {{ theme.theme }}</h3>
     <div>
       {{ theme?.describe }}
     </div>
   </div>
-
 
 
   <!-- 基本資料 -->
@@ -30,7 +29,6 @@
       <p>年齡 : {{ userData.age }}</p>
     </div>
   </div>
-
 
 
   <!-- Question -->
@@ -56,8 +54,7 @@
 
   <!-- 按鈕 -->
   <div class="allBtnCss">
-    <button class="btn1Css" (click)="cancel()">取消</button>
-    <button class="btn1Css" (click)="check()">預覽</button>
+    <button class="btn1Css" (click)="save()" >僅儲存</button>
+    <button class="btn1Css" (click)="publish()">儲存並發佈</button>
   </div>
 
-</div>

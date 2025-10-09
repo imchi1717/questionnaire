@@ -1,70 +1,99 @@
 <div class="background">
-  <!-- 左欄按鈕 -->
-  <div class="btnClassCss">
-    <button class="btnCss">問卷列表</button><br>
-    <button class="btnCss">個人資料</button><br>
-    <button class="btnCss2">登出</button>
+  <!-- 搜尋區塊 -->
+  <div class="searchCss">
+    <span class="searchItem">問卷名稱</span>
+    <input class="searchInput" [(ngModel)]="inputData" (keyup)="searchInput()" >
+    <span class="searchItem">狀態</span>
+    <select class="searchInput" [(ngModel)]="selectData" (change)="test()">
+      <option value="">--Please choose--</option>
+      <option value="ing">進行中</option>
+      <option value="start">即將開始</option>
+      <option value="end">結束</option>
+    </select>
+    <span class="searchItem">開始時間</span>
+    <input class="searchInput" type="date" [(ngModel)]="sDate" (change)="changeSDate()"  >
+    <span class="searchItem">結束時間</span>
+    <input class="searchInput" type="date" [(ngModel)]="eDate" min="{{ sDate }}" (change)="changeEDate()">
   </div>
 
-  <div >
-    <!-- 搜尋區塊 -->
-    <div class="searchCss">
-      <span class="searchItem">問卷名稱</span> <input class="searchItem2">
-      <span class="searchItem">狀態</span> <input class="searchItem2">
-      <span class="searchItem">開始時間</span> <input class="searchItem2" type="date">
-      <span class="searchItem">結束時間</span> <input class="searchItem2" type="date">
-    </div>
+  <!-- 食物 -->
+  <div style="padding-left: 600px;">
+    <img src="ham2.png" class="menuCss">
+  </div>
 
+  <!-- 表格區塊 -->
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
 
+      <!-- 編號 -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> 編號 </th>
+        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+      </ng-container>
 
-    <!-- 表格區塊 -->
-    <div class="mat-elevation-z8 ">
-      <table mat-table [dataSource]="dataSource" >
+      <!-- 名稱 -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> 名稱 </th>
+        <td mat-cell *matCellDef="let element">
+          @if (element.state == '進行中') {
+          <p [routerLink]="['/innerPage']" class="routerCss">
+            {{element.name}}
+          </p>
+          }
+          @else{
+          {{element.name}}
+          }
+        </td>
+      </ng-container>
 
-        <!-- 編號 -->
-        <ng-container matColumnDef="position">
-          <th mat-header-cell *matHeaderCellDef> 編號 </th>
-          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-        </ng-container>
+      <!-- 狀態 -->
+      <ng-container matColumnDef="state">
+        <th mat-header-cell *matHeaderCellDef> 狀態 </th>
+        <td mat-cell *matCellDef="let element"> {{element.state}} </td>
+      </ng-container>
 
-        <!-- 名稱 -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> 名稱 </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
+      <!-- 開始時間 -->
+      <ng-container matColumnDef="sDate">
+        <th mat-header-cell *matHeaderCellDef> 開始時間 </th>
+        <td mat-cell *matCellDef="let element"> {{element.sDate}} </td>
+      </ng-container>
 
-        <!-- 狀態 -->
-        <ng-container matColumnDef="state">
-          <th mat-header-cell *matHeaderCellDef> 狀態 </th>
-          <td mat-cell *matCellDef="let element"> {{element.state}} </td>
-        </ng-container>
+      <!-- 結束時間 -->
+      <ng-container matColumnDef="eDate">
+        <th mat-header-cell *matHeaderCellDef> 結束時間 </th>
+        <td mat-cell *matCellDef="let element"> {{element.eDate}} </td>
+      </ng-container>
 
-        <!-- 開始時間 -->
-        <ng-container matColumnDef="sDate">
-          <th mat-header-cell *matHeaderCellDef> 開始時間 </th>
-          <td mat-cell *matCellDef="let element"> {{element.sDate}} </td>
-        </ng-container>
+      <!-- 結果 -->
+      <ng-container matColumnDef="result">
+        <th mat-header-cell *matHeaderCellDef> 結果 </th>
+        <td mat-cell *matCellDef="let element">
+          @if (element.state == '進行中') {
+          <p [routerLink]="['/innerPage']" class="resultCss">
+            {{element.result}}
+          </p>
+          }
+          @else if (element.state == '結束') {
+          <p [routerLink]="['/chart']" class="resultCss">
+            {{element.result}}
+          </p>
+          } @else {
+          {{element.result}}
+          }
+        </td>
+      </ng-container>
 
-        <!-- 結束時間 -->
-        <ng-container matColumnDef="eDate">
-          <th mat-header-cell *matHeaderCellDef> 結束時間 </th>
-          <td mat-cell *matCellDef="let element"> {{element.eDate}} </td>
-        </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{
+              'cssA': row.state == '進行中',
+              'cssB': row.state == '即將開始',
+              'cssC': row.state == '結束',
+            }">
+      </tr>
+    </table>
 
-        <!-- 結果 -->
-        <ng-container matColumnDef="result">
-          <th mat-header-cell *matHeaderCellDef> 結果 </th>
-          <td mat-cell *matCellDef="let element"> {{element.result}} </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-
-      <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                    showFirstLastButtons
-                    aria-label="Select page of periodic elements">
-      </mat-paginator>
-    </div>
+    <br><br>
+    <mat-paginator [pageSizeOptions]="[ 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
   </div>
 </div>

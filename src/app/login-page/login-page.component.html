@@ -1,0 +1,60 @@
+<div class="background">
+
+  <!-- tabs -->
+  <div class="bodyCss">
+    <mat-tab-group>
+
+      <!-- 登入 -->
+      <mat-tab label="LOGIN">
+        <div class="titleBox">
+          <h2 style="letter-spacing: 1px; padding-top: 20px;">MEMBER LOGIN</h2>
+          <div style="font-size: 13px; letter-spacing: 1px;">" Idea sets your mind in motion "</div>
+          <hr style="border-color:#10FC0C; width: 70px; margin: 15px auto; margin-bottom: 30px;">
+        </div>
+        <div class="inputBox">
+          <label>Account</label>
+          <input class="inputCss" [(ngModel)]="userAccount.account" placeholder="your account">
+        </div>
+
+        <div class="inputBox">
+          <label>Password</label>
+          <input class="inputCss" [(ngModel)]="userAccount.password" placeholder="your password">
+        </div>
+
+        <div class="accountCss">Not a member yet?  Click the button to register!</div>
+        <button class="btnCss" (click)="loginbtn()">LOGIN </button>
+      </mat-tab>
+
+
+      <!-- 註冊 -->
+      <mat-tab label="REGISTER">
+        <h2 style="letter-spacing: 1px; padding-top: 10px;">MEMBER REGISTER</h2>
+        <div style="font-size: 13px; letter-spacing: 1px;">" Idea sets your mind in motion "</div>
+        <hr style="border-color:#10FC0C; width: 70px; margin: 15px auto; margin-bottom: 30px;">
+
+        <div class="inputBox2">
+          <label>Name</label>
+          <input class="inputCss" [(ngModel)]="userData.name" placeholder="your username">
+        </div>
+
+        <div class="inputBox2">
+          <label>Phone</label>
+          <input class="inputCss" [(ngModel)]="userData.phone" placeholder="your phone">
+        </div>
+
+        <div class="inputBox2">
+          <label>E-mail</label>
+          <input class="inputCss" [(ngModel)]="userData.email" placeholder="E-mail address">
+        </div>
+
+        <div class="inputBox2">
+          <label>Age</label>
+          <input class="inputCss" [(ngModel)]="userData.age" placeholder="your age">
+        </div>
+
+        <button class="btnCss2" (click)="signInbtn()">SIGN UP</button>
+      </mat-tab>
+
+    </mat-tab-group>
+  </div>
+</div>

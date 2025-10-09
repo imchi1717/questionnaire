@@ -1,10 +1,12 @@
-.headerCss{
-  background-color: #10FC0C;
-  height: 50px;
-  position: relative;
-  z-index: 1; /* 背景圖 */
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* 讓整個頁面至少跟視窗一樣高 */
 }
-.logoCss{
-  position: absolute;
-  z-index: 2; /* 背景圖 */
+
+main {
+  flex: 1; /* 撐開中間內容，footer 就會被推到底部 */
 }
+
+
+

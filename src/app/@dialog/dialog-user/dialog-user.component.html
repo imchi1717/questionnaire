@@ -1,0 +1,18 @@
+<div class="background">
+
+  <!-- dialog標題 -->
+  <div class="diaTitle" mat-dialog-title>/ 個人資料 /</div>
+
+  <!-- dialog內容 -->
+  <mat-dialog-content class="userCss">
+    <p>姓名 : {{ userData.name }}</p>
+    <p>手機 : {{ userData.phone }}</p>
+    <p>E-mail : {{ userData.email }}</p>
+    <p>年齡 : {{ userData.age }}</p>
+  </mat-dialog-content>
+
+  <!-- dialog按鈕 -->
+  <mat-dialog-actions>
+    <button class="btnCss" (click)="onClick()">關閉 →</button>
+  </mat-dialog-actions>
+</div>

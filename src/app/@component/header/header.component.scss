@@ -1,0 +1,43 @@
+.background {
+  width: 100%;
+  height: 70px;
+  background-color: #064192;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+.headerCss {
+  display: flex;
+}
+.logoCss {
+  letter-spacing: 1px;
+  font-size: 30px;
+  font-weight: bolder;
+  font-family: "Georgia", serif;
+  margin-left: 100px;
+  color: #FFF9E6;
+}
+.btnBox {
+  margin-right: 100px;
+  margin-top: 23px;
+}
+.btnClass {
+  margin-left: 10px;
+  margin-right: 10px;
+  border: none;
+  background-color: #064192;
+  font-size: 15px;
+  color: #FFF9E6;
+  &:hover {
+    color: #FFF9E6;
+  }
+}
+.btnChoose {
+  margin-left: 10px;
+  margin-right: 10px;
+  border: none;
+  background-color: #064192;
+  font-size: 15px;
+  font-weight: bold;
+  color: #FFF9E6;
+}
