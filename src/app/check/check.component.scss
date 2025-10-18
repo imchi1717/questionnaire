@@ -13,6 +13,7 @@
   text-align: right;
   margin-right: 30px;
   margin-top: 20px;
+  font-size: 14px;
 }
 .mainTitleCss {
   position: absolute;
@@ -22,7 +23,7 @@
   transform: translate(-50%, -50%);
   text-align: center;
   color: white;
-  font-size: 100px;
+  font-size: 80px;
   font-weight: bolder;
   font-family: "Impact", sans-serif;
   letter-spacing: 4px;
@@ -40,9 +41,10 @@
 .bodyCss{
   border-radius: 16px;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
-  padding: 40px 65px;
-  margin-bottom: 30px;
+  padding: 30px 65px;
+  margin-bottom: 20px;
   background: #fff;
+  font-size: 14px;
 }
 .background{
   width: 100%;
@@ -51,20 +53,21 @@
 }
 .themeCss{
   text-align: center;
-  margin: 80px;
+  margin: 40px;
+  font-size: 14px;
 }
 .allBtnCss{
   text-align: center;
 }
 .btn1Css{
-  height: 40px;
-  width: 70px;
+  height: 35px;
+  width: 65px;
   border-radius: 50px;
-  background: #10FC0C;
-  border: 2px solid #10FC0C;
-  color: black;
-  font-size: 15px;
-  font-weight: bold;
+  background: #971D10;
+  border: 2px solid #971D10;
+  color: #fafafa;
+  font-size: 13px;
+  font-weight: 500;
   letter-spacing: 1px;
   text-align: center;
   margin-right: 10px;
@@ -72,15 +75,15 @@
   cursor:pointer;
 
   &:hover {
-    color: #10FC0C;
-    background: black;
+    color: #971D10;
+    background: #fafafa;
   }
 }
 
 .titleCss{
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
 }
 .divider{
-  border-top: 1px solid #10FC0C;
+  border-top: 1px solid #971D10;
 }

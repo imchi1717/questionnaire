@@ -5,40 +5,37 @@
     <mat-tab-group>
 
       <!-- 登入 -->
-      <mat-tab label="LOGIN">
+      <mat-tab label="登入">
         <div class="titleBox">
-          <h2 style="letter-spacing: 1px; padding-top: 20px;">MEMBER LOGIN</h2>
-          <div style="font-size: 13px; letter-spacing: 1px;">" Idea sets your mind in motion "</div>
-          <hr style="border-color:#10FC0C; width: 70px; margin: 15px auto; margin-bottom: 30px;">
+          <div style="letter-spacing: 1px; padding-top: 30px; padding-bottom: 10px; font-size: 18px; font-weight: bold;">會員登入</div>
+          <hr style="border-color:#971D10; width: 40px; margin: 10px auto; margin-bottom: 20px;">
         </div>
         <div class="inputBox">
-          <label>Account</label>
+          <label>帳號</label>
           <input class="inputCss" [(ngModel)]="userAccount.account" placeholder="your account">
         </div>
 
         <div class="inputBox">
-          <label>Password</label>
+          <label>密碼</label>
           <input class="inputCss" [(ngModel)]="userAccount.password" placeholder="your password">
         </div>
 
-        <div class="accountCss">Not a member yet?  Click the button to register!</div>
-        <button class="btnCss" (click)="loginbtn()">LOGIN </button>
+        <div class="accountCss">還沒註冊帳號嗎? 點按鈕"註冊"一個!</div>
+        <button class="btnCss" (click)="loginbtn()">登入</button>
       </mat-tab>
 
 
       <!-- 註冊 -->
-      <mat-tab label="REGISTER">
-        <h2 style="letter-spacing: 1px; padding-top: 10px;">MEMBER REGISTER</h2>
-        <div style="font-size: 13px; letter-spacing: 1px;">" Idea sets your mind in motion "</div>
-        <hr style="border-color:#10FC0C; width: 70px; margin: 15px auto; margin-bottom: 30px;">
-
+      <mat-tab label="註冊">
+        <div style="letter-spacing: 1px; padding-top: 20px; padding-bottom: 10px; font-size: 18px; font-weight: bold;">會員註冊</div>
+        <hr style="border-color:#971D10; width: 40px; margin: 10px auto; margin-bottom: 20px;">
         <div class="inputBox2">
-          <label>Name</label>
+          <label>姓名</label>
           <input class="inputCss" [(ngModel)]="userData.name" placeholder="your username">
         </div>
 
         <div class="inputBox2">
-          <label>Phone</label>
+          <label>電話</label>
           <input class="inputCss" [(ngModel)]="userData.phone" placeholder="your phone">
         </div>
 
@@ -48,11 +45,11 @@
         </div>
 
         <div class="inputBox2">
-          <label>Age</label>
+          <label>年齡</label>
           <input class="inputCss" [(ngModel)]="userData.age" placeholder="your age">
         </div>
 
-        <button class="btnCss2" (click)="signInbtn()">SIGN UP</button>
+        <button class="btnCss2" (click)="signInbtn()">註冊</button>
       </mat-tab>
 
     </mat-tab-group>

@@ -3,18 +3,24 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-step-icon-selected {
-  background-color: #064192 !important;
+  background-color: #971D10 !important;
 }
 .mat-step-icon-state-edit {
-  background-color: #064192 !important;
+  background-color: #971D10 !important;
 }
 .mat-step-icon-content{
-  color: black;
+  color: #fafafa;
 }
 .mat-step-icon{
-  background-color: #064192 !important;
+  background-color: #971D10 !important;
 }
 .mat-mdc-header-row {
-  background-color: #064192 !important;
+  background-color: #971D10 !important;
   color: #FFF9E6 !important;
+}
+.mat-mdc-tab-group .mdc-tab-indicator__content--underline {
+  border-color: #971D10 !important;
+}
+.mat-mdc-paginator-container{
+  background-color: #fafafa !important;
 }

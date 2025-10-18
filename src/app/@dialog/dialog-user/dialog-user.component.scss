@@ -4,26 +4,28 @@
   text-align: center;
 }
 .btnCss{
-  width: 140px;
+  width: 100px;
   height: 40px;
   border-radius: 20px;
-  background: #10FC0C;
-  border: 2px solid #10FC0C;
-  color: black;
+  background: #971D10;
+  border: 2px solid #971D10;
+  color: #fafafa;
   font-size: 14px;
   font-weight: bold;
   letter-spacing: 1px;
   cursor:pointer;
-  margin-top: 15px;
+  margin-top: 20px;
   margin-bottom: 15px;
-  margin-right: 68px;
+  margin-right: 90px;
   &:hover {
-    color: #10FC0C;
-    background: black;
+    color: #971D10;
+    background: #fafafa;
   }
 }
 .userCss{
   text-align: left;
   margin-left: 20px;
 }
-
+.mat-mdc-dialog-title{
+  padding-bottom: 5px;
+}

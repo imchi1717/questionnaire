@@ -94,4 +94,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {position: 7, name: 'Nitrogen', state: '進行中', sDate: '2025-05-09', eDate: '2025-06-09', result: '→'},
   {position: 8, name: 'Oxygen', state: '即將開始', sDate: '2025-10-19', eDate: '2025-11-09', result: '→'},
   {position: 9, name: 'Fluorine', state: '即將開始', sDate: '2025-05-09', eDate: '2025-12-09', result: '→'},
+  {position: 10, name: 'Carbon', state: '即將開始', sDate: '2025-12-28', eDate: '2026-05-09', result: '→'},
+  {position: 11, name: 'Nitrogen', state: '進行中', sDate: '2025-05-09', eDate: '2025-06-09', result: '→'},
+  {position: 12, name: 'Oxygen', state: '即將開始', sDate: '2025-10-19', eDate: '2025-11-09', result: '→'},
 ];

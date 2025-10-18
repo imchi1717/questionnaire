@@ -10,22 +10,25 @@
   background-color: #FAF9FD;
 }
 
-.bodyCss{
+.bodyCss {
   display: flex;
   justify-content: center;
 }
 
-.stepperBox{
-  margin-left: 200px;
+.stepperBox {
+  width: 500px;
+  margin-left: 190px;
+  margin-right: 30px;
   margin-top: 60px;
   margin-bottom: 25px;
 }
 
-.previewBox{
-  margin-right: 180px;
+.previewBox {
+  font-size: 14px;
+  margin-right: 190px;
   margin-top: 60px;
   margin-bottom: 30px;
-  width: 480px;
+  width: 450px;
   height: 500px;
   border-radius: 16px;
   box-shadow: 0 6px 24px rgba(180, 119, 119, 0.09);
@@ -35,100 +38,129 @@
   overflow-x: hidden;
 }
 
-.divider{
-  border-top: 1px solid #10FC0C;
+.preCss {
+  padding-bottom: 10px;
+  word-break: keep-all;
+}
+
+.divider {
+  border-top: 1px solid #971D10;
   margin-top: 25px;
   margin-bottom: 25px;
 }
 
 mark {
-  background-color: #10FC0C;
-  color: black;
+  background-color: #F7DDA1;
+  color: #971D10;
 }
 
-.btnCss{
-  height: 30px;
-  width: 300px;
+.btnCss {
+  height: 28px;
+  width: 280px;
   border-radius: 50px;
-  background: #10FC0C;
-  border: 2px solid #10FC0C;
-  color: black;
+  background: #971D10;
+  border: 2px solid #971D10;
+  color: #fafafa;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: 1px;
   text-align: center;
   margin-top: 30px;
-  margin-left: 60px;
-  cursor:pointer;
+  cursor: pointer;
 
   &:hover {
-    color: #10FC0C;
-    background: black;
+    color: #971D10;
+    background: #fafafa;
   }
 }
 
-.insCss{
+.insCss {
   display: flex;
   justify-content: left;
   padding-top: 20px;
+  font-size: 14px;
+}
+.rqCss{
+  color: #971D10;
+}
+label {
+  padding-right: 10px;
+  font-size: 14px;
 }
 
-label{
-  padding-right: 8px;
-}
-
-.btnChoose{
+.btnChoose {
   height: 30px;
   width: 60px;
   border-radius: 50px;
-  background: #10FC0C;
-  border: 2px solid #10FC0C;
-  color: black;
+  background: #971D10;
+  border: 2px solid #971D10;
+  color: #fafafa;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 1px;
   text-align: center;
-  margin-top: 30px;
+  margin-top: 15px;
   margin-right: 10px;
   margin-bottom: 15px;
-  cursor:pointer;
+  cursor: pointer;
 
   &:hover {
-    color: #10FC0C;
-    background: black;
+    color: #971D10;
+    background: #fafafa;
   }
 }
 
-.mat-step-icon-selected{
-  background-color: #10FC0C ;
+.mat-step-icon-selected {
+  background-color: #971D10;
 }
 
-.btnEditBox{
+.btnEditBox {
   display: flex;
   justify-content: left;
 }
 
-.iconBox{
+.iconBox {
   margin-top: 18px;
   margin-right: 10px;
 }
-
-.btnNext{
-  height: 30px;
-  width: 60px;
-  border-radius: 50px;
-  background: #10FC0C;
-  border: 2px solid #10FC0C;
-  color: black;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  margin-left: 1250px;
-  margin-bottom: 50px;
-  cursor:pointer;
+.iconCss {
+  cursor: pointer;
 
   &:hover {
-    color: #10FC0C;
-    background: black;
+    color: #971D10;
   }
+}
+
+.btnNext {
+  height: 30px;
+  width: 60px;
+  border-radius: 30px;
+  background: #971D10;
+  border: 2px solid #971D10;
+  color: #fafafa;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-left: 20px;
+  margin-bottom: 50px;
+  cursor: pointer;
+
+  &:hover {
+    color: #971D10;
+    background: #fafafa;
+  }
+}
+.btnBox {
+  margin-left: 1000px;
+}
+.inputCss {
+  width: 280px;
+  height: 23px;
+}
+
+.input2Css {
+  width: 280px;
+  height: 23px;
+  margin-top: 5px;
+  margin-bottom: 3px;
 }

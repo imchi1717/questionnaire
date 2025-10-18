@@ -2,31 +2,28 @@
 
   <div class="bodyCss">
     <!-- Stepper -->
+    <!-- 問卷說明 -->
     <div class="stepperBox">
       <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
         <mat-step>
           <ng-template matStepLabel>設定主題</ng-template>
           <div class="themeCss">
             <div class="insCss">
-              <label>問卷名稱 : </label>
-              <input [(ngModel)]="quesName" style="width: 350px; height: 25px;">
+              <div class="rqCss">*</div><label>問卷名稱 :</label>
+              <input [(ngModel)]="quesName" class="inputCss">
             </div>
-
             <div class="insCss">
-              <label>問卷說明 : </label>
-              <textarea [(ngModel)]="quesDescription" style="width: 350px; height: 100px;"></textarea>
+              <div class="rqCss">*</div><label>問卷說明 :</label>
+              <textarea [(ngModel)]="quesDescription" class="inputCss"></textarea>
             </div>
-
             <div class="insCss">
-              <label>開始時間 : </label>
-              <input type="date" [(ngModel)]="sDate" style="width: 350px; height: 25px;">
+              <div class="rqCss">*</div><label>開始時間 :</label>
+              <input type="date" [(ngModel)]="sDate" style="width: 280px; height: 23px;">
             </div>
-
             <div class="insCss">
-              <label>結束時間 :</label>
-              <input type="date" [(ngModel)]="eDate" style="width: 350px; height: 25px;">
+              <div class="rqCss">*</div><label>結束時間 :</label>
+              <input type="date" [(ngModel)]="eDate" min="{{ sDate }}" style="width: 280px; height: 23px;">
             </div>
-
             <div>
               <button class="btnCss" matStepperNext>下一步 </button>
             </div>
@@ -34,106 +31,126 @@
         </mat-step>
 
 
-        <!-- 主要題目 -->
+        <!-- 題目按鈕 -->
         <mat-step>
           <ng-template matStepLabel>編輯題目</ng-template>
-          <button class="btnChoose" (click)="page(1)">單選</button>
-          <button class="btnChoose" (click)="page(1)">複選</button>
-          <button class="btnChoose" (click)="page(2)">文字</button>
+          <button class="btnChoose" (click)="choose('S')">單選</button>
+          <button class="btnChoose" (click)="choose('M')">複選</button>
+          <button class="btnChoose" (click)="choose('T')">文字</button>
 
-          <!-- 按鈕判斷 -->
-          @if ( quesEdit == 1 ) {
-          <!-- 單選 / 複選 -->
-          <div class="insCss">
-            <label>問題名稱 : </label>
-            <input style="width: 350px; height: 25px;">
-          </div>
-          <div>
-            <label>選項 : </label>
+
+          <!-- 題目類型判斷 -->
+          @if ( quesEdit == 'S' || quesEdit == 'M' ) {
+            <!-- 單選 / 複選 -->
+            <div class="insCss">
+              <div class="rqCss">*</div> <label>問題名稱 :</label>
+              <input [(ngModel)]="quesTitle" class="inputCss">
+            </div>
+
+            <!-- 固定的兩個輸入框 -->
+            <span class="rqCss">*</span><label>選項 :</label><br>
+            <input [(ngModel)]="optionInput[0]" class="input2Css">
+            <input [(ngModel)]="optionInput[1]" class="input2Css">
             <br>
-            <input style="width: 300px; height: 25px; margin-top: 10px;">
-            <br>
-            <input style="width: 300px; height: 25px; margin-top: 10px;">
-          </div>
-          <br>
-          <mat-icon aria-hidden="false" aria-label="Example add icon" fontIcon="add"></mat-icon>
-          <div class="insCss">
-            <label>是否必填 : </label>
-            <input type="radio">是
-            <input type="radio">否
-          </div>
-          } @else if ( quesEdit == 2 ) {
-          <!-- 文字 -->
-          <div class="insCss">
-            <label>問題名稱 : </label>
-            <input style="width: 350px; height: 25px;">
-          </div>
-          <div class="insCss">
-            <label>選項 : </label>
-            <textarea style="width: 380px; height: 100px;"></textarea>
-          </div>
-          <div class="insCss">
-            <label>是否必填 : </label>
-            <input type="radio">是
-            <input type="radio">否
-          </div>
+
+
+            <!-- 新增空的輸入框 -->
+            @for (inputData of extraOptions; track $index) {
+              <input [(ngModel)]="extraOptions[$index]" class="input2Css">
+
+              <!-- 刪除選項按鈕 -->
+              <mat-icon aria-hidden="false" aria-label="Example remove icon" fontIcon="remove" class="iconCss"
+                (click)="removeBtn($index)"></mat-icon>
+              <br>
+            }
+            <!-- 新增選項按鈕 -->
+            <mat-icon aria-hidden="false" aria-label="Example add icon" fontIcon="add" class="iconCss"
+              (click)="addBtn()"></mat-icon>
+
+
+              <!-- 必填項 -->
+            <div class="insCss">
+              <div class="rqCss">*</div><label>必填 :</label>
+              <input type="radio" name="required" [(ngModel)]="required" [value]="true">是
+              <input type="radio" name="required" [(ngModel)]="required" [value]="false">否
+            </div>
+
+          } @else if ( quesEdit == 'T' ) {
+            <!-- 文字 -->
+            <div class="insCss">
+              <div class="rqCss">*</div><label>問題名稱 :</label>
+              <input class="inputCss">
+            </div>
+            <div class="insCss">
+              <div class="rqCss">*</div><label>選項 :</label>
+              <textarea class="inputCss"></textarea>
+            </div>
+            <!-- 必填項 -->
+            <div class="insCss">
+              <div class="rqCss">*</div><label>是否必填 :</label>
+              <input type="radio" name="required" [(ngModel)]="required" [value]="true">是
+              <input type="radio" name="required" [(ngModel)]="required" [value]="false">否
+            </div>
           }
+
           <!-- 新增題目按鈕 -->
-          <div>
-            <button class="btnCss" matButton matStepperPrevious>新增題目</button>
-          </div>
+          <button class="btnCss" matButton matStepperPrevious (click)="addQuesBtn()">新增題目</button>
         </mat-step>
       </mat-stepper>
     </div>
 
+
+
     <span style="flex: 1 1 auto"></span>
+
+
+
 
     <!-- 即時預覽 -->
     <div class="previewBox">
       <h4><mark>問卷主題</mark></h4>
-      <p>問卷名稱 : {{ quesName}}</p>
-      <p>問卷說明 : {{ quesDescription }}</p>
-      <p>開始時間 : {{ sDate }}</p>
-      <p>結束時間 : {{ eDate }}</p>
+      <div class="preCss">問卷名稱 : {{ quesName }}</div>
+      <div class="preCss">問卷說明 : {{ quesDescription }}</div>
+      <div class="preCss">開始時間 : {{ sDate }}</div>
+      <div class="preCss">結束時間 : {{ eDate }}</div>
 
       <hr class="divider">
 
       <h4><mark>主要問題</mark></h4>
+      @for (quesData of quesArray; track $index) {
+
       <div class="btnEditBox">
         <div class="iconBox">
           <mat-icon aria-hidden="false" aria-label="Example edit icon" fontIcon="edit"></mat-icon>
           <mat-icon aria-hidden="false" aria-label="Example delete icon" fontIcon="delete"></mat-icon>
         </div>
-        <div>
-          <p>1. 喜歡慢慢享受還是速速吃飯 :</p>
-          <input type="radio">慢慢享受(純粹吃飯很慢)
-          <input type="radio">速速用吞的
-        </div>
+        <!-- 題目必選 -->
+        @if (quesData.required == true) {
+          <div class="rqCss">*</div>
+        }
+        {{ $index + 1 }}. {{ quesData.quesTitle }}
+        <!-- 單選 -->
+        @if (quesData.type == 'S') {
+          @for (opt of quesData.options; track $index) {
+            <div><input type="radio">{{ opt }}</div>
+          }
+        }
+        <!-- 複選 -->
+        @if (quesData.type == 'M') {
+          @for (opt of quesData.options; track $index) {
+            <div><input type="checkbox">{{ opt }}</div>
+          }
+        }
+        <!-- 文字 -->
+        @if (quesData.type == 'T') {
+            <textarea placeholder="使用者回答區"></textarea>
+        }
       </div>
-      <div class="btnEditBox">
-        <div class="iconBox">
-          <mat-icon aria-hidden="false" aria-label="Example edit icon" fontIcon="edit"></mat-icon>
-          <mat-icon aria-hidden="false" aria-label="Example delete icon" fontIcon="delete"></mat-icon>
-        </div>
-        <div>
-          <p>2. 鍋燒類的主餐選哪個? </p>
-          <input type="checkbox">意麵
-          <input type="checkbox">雞絲麵
-          <input type="checkbox">烏龍麵
-          <input type="checkbox">飯
-          <input type="checkbox">都加
-        </div>
-      </div>
-      <div class="btnEditBox">
-        <div class="iconBox">
-          <mat-icon aria-hidden="false" aria-label="Example edit icon" fontIcon="edit"></mat-icon>
-          <mat-icon aria-hidden="false" aria-label="Example delete icon" fontIcon="delete"></mat-icon>
-        </div>
-        <div>
-          <p>3. 其他想吃的?</p>
-        </div>
-      </div>
+      }
     </div>
   </div>
+  <div class="btnBox">
+  <button class="btnNext" (click)="backPage()">返回</button>
   <button class="btnNext" (click)="checkPage()">預覽</button>
+  </div>
 </div>

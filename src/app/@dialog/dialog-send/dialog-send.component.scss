@@ -2,18 +2,18 @@
   text-align: center;
 }
 .diaTitle{
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 500;
 }
 .btnCss{
-  width: 185px;
-  height: 40px;
+  width: 180px;
+  height: 35px;
   border-radius: 20px;
-  background: #10FC0C;
-  border: 2px solid #10FC0C;
-  color: black;
+  background: #971D10;
+  border: 2px solid #971D10;
+  color: #fafafa;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 500;
   letter-spacing: 1px;
   cursor:pointer;
   margin-right: 30px;
@@ -21,7 +21,10 @@
   margin-bottom: 15px;
 
   &:hover {
-    color: #10FC0C;
-    background: black;
+    color: #971D10;
+    background: #fafafa;
   }
+}
+.mat-mdc-dialog-title{
+  padding-bottom: 1px;
 }

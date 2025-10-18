@@ -34,6 +34,7 @@ export class DialogUserComponent {
     this.userData = this.quesDataService.userData;
   }
 
+  // 個人資料的dialog
   onClick() {
     this.dialogRef.close();
     this.router.navigateByUrl('/list');

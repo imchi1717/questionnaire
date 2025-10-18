@@ -1,8 +1,21 @@
 <div class="background">
+  <!-- 橫幅 -->
+  <img src="/banner1.png" style="width: 100%; padding-bottom: 30px;">
+
+  <!-- 問卷標題 -->
+  <div style="text-align: center; padding: 50px; width: 950px; margin: 0 auto 0 auto;">
+    <div style="font-size: 30px; font-weight: 500; padding-bottom: 10px; letter-spacing: 3px;">問卷列表</div>
+    <div style="font-size: 13px; padding-top: 10px; letter-spacing: 1px;">
+      無論你是資深收藏家、剛入坑的新手，還是單純被萌到的路人，我們都想聽聽你的意見！
+      調查大家眼中的「公仔魅力」，一起挖掘那些讓人忍不住掏錢、拍照、炫耀的瞬間。
+    </div>
+    <div style="color: #971D10; font-size: 10px; padding-top: 20px; letter-spacing: 1px;"> ▋▋▋</div>
+  </div>
+
   <!-- 搜尋區塊 -->
   <div class="searchCss">
     <span class="searchItem">問卷名稱</span>
-    <input class="searchInput" [(ngModel)]="inputData" (keyup)="searchInput()" >
+    <input class="searchInput" [(ngModel)]="inputData" (keyup)="searchInput()">
     <span class="searchItem">狀態</span>
     <select class="searchInput" [(ngModel)]="selectData" (change)="test()">
       <option value="">--Please choose--</option>
@@ -11,14 +24,9 @@
       <option value="end">結束</option>
     </select>
     <span class="searchItem">開始時間</span>
-    <input class="searchInput" type="date" [(ngModel)]="sDate" (change)="changeSDate()"  >
+    <input class="searchInput" type="date" [(ngModel)]="sDate" (change)="changeSDate()">
     <span class="searchItem">結束時間</span>
     <input class="searchInput" type="date" [(ngModel)]="eDate" min="{{ sDate }}" (change)="changeEDate()">
-  </div>
-
-  <!-- 食物 -->
-  <div style="padding-left: 600px;">
-    <img src="ham2.png" class="menuCss">
   </div>
 
   <!-- 表格區塊 -->
@@ -49,6 +57,7 @@
       <!-- 狀態 -->
       <ng-container matColumnDef="state">
         <th mat-header-cell *matHeaderCellDef> 狀態 </th>
+
         <td mat-cell *matCellDef="let element"> {{element.state}} </td>
       </ng-container>
 

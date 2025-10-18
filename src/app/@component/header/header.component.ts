@@ -36,7 +36,7 @@ export class HeaderComponent {
   openUser() {
     const dialogRef = this.dialog.open(DialogUserComponent,{
       width: '330px',
-      height: '300px',
+      height: '350px',
     })
   }
 

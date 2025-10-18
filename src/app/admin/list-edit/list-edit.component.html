@@ -1,5 +1,17 @@
 <div class="background">
 
+  <!-- 橫幅 -->
+  <img src="/banner1.png" style="width: 100%; padding-bottom: 30px;">
+
+  <!-- 問卷標題 -->
+  <div style="text-align: center; padding: 50px; width: 950px; margin: 0 auto 0 auto;">
+    <div style="font-size: 30px; font-weight: 500; padding-bottom: 10px; letter-spacing: 3px;">問卷列表</div>
+    <div style="font-size: 13px; padding-top: 10px; letter-spacing: 1px;">
+      無論你是資深收藏家、剛入坑的新手，還是單純被萌到的路人，我們都想聽聽你的意見！
+      調查大家眼中的「公仔魅力」，一起挖掘那些讓人忍不住掏錢、拍照、炫耀的瞬間。
+    </div>
+    <div style="color: #971D10; font-size: 10px; padding-top: 20px; letter-spacing: 1px;"> ▋▋▋</div>
+  </div>
 
   <div>
     <!-- 搜尋區塊 -->
@@ -20,114 +32,116 @@
     </div>
 
 
+    <div style="display: flex;">
+      <!-- 編輯icon -->
+      <div>
+        <div class="iconCss1">
+          <mat-icon class="deleteCss" aria-hidden="false" aria-label="Example delete icon" fontIcon="delete"
+            (click)="delBtn()"></mat-icon>
+          <div class="hover">刪除</div>
+        </div>
+        <br>
+        <div class="iconCss2">
+          <mat-icon class="addCss" aria-hidden="false" aria-label="Example add icon" fontIcon="add"
+            (click)="addBtn()"></mat-icon>
+          <div class="hover">新增</div>
+        </div>
+      </div>
+      <!-- 表格區塊 -->
+      <div class="mat-elevation-z8 ">
+        <table mat-table [dataSource]="dataSource">
+          <!-- 勾選欄 -->
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <!-- 當checkbox狀態改變時，如果事件存在，就執行masterToggle()，否則什麼都不做 -->
+              <!-- 有選中全部項目 → 全選框會勾起來 -->
+              <!-- 有選中項目但不是全部 → 全選框會顯示灰色半勾（半選） -->
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()">
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <!-- 點 checkbox 只影響這列，不會影響父元素 → stopPropagation() 阻止事件冒泡 -->
+              <!-- 點 checkbox 切換這列的選中狀態 → toggle() 切換某個元素的選取狀態 -->
+              <!-- 勾選狀態根據資料同步 -->
+              <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                [checked]="selection.isSelected(row)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
 
-    <!-- 編輯icon -->
-    <div class="iconCss">
-      <mat-icon class="deleteCss" aria-hidden="false" aria-label="Example delete icon" fontIcon="delete" (click)="delBtn()"></mat-icon>
-      <mat-icon class="addCss" aria-hidden="false" aria-label="Example add icon" fontIcon="add" (click)="addBtn()"></mat-icon>
-    </div>
+          <!-- 編號 -->
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef> 編號</th>
+            <td mat-cell *matCellDef="let element"> {{element.position}}</td>
+          </ng-container>
 
-
-
-    <!-- 表格區塊 -->
-    <div class="mat-elevation-z8 ">
-      <table mat-table [dataSource]="dataSource">
-
-
-        <!-- 勾選欄 -->
-        <ng-container matColumnDef="select">
-          <th mat-header-cell *matHeaderCellDef>
-          <!-- 當checkbox狀態改變時，如果事件存在，就執行masterToggle()，否則什麼都不做 -->
-          <!-- 有選中全部項目 → 全選框會勾起來 -->
-          <!-- 有選中項目但不是全部 → 全選框會顯示灰色半勾（半選） -->
-            <mat-checkbox (change)="$event ? masterToggle() : null"
-                          [checked]="selection.hasValue() && isAllSelected()"
-                          [indeterminate]="selection.hasValue() && !isAllSelected()">
-            </mat-checkbox>
-          </th>
-          <td mat-cell *matCellDef="let row">
-            <!-- 點 checkbox 只影響這列，不會影響父元素 → stopPropagation() 阻止事件冒泡 -->
-            <!-- 點 checkbox 切換這列的選中狀態 → toggle() 切換某個元素的選取狀態 -->
-            <!-- 勾選狀態根據資料同步 -->
-            <mat-checkbox (click)="$event.stopPropagation()"
-                          (change)="$event ? selection.toggle(row) : null"
-                          [checked]="selection.isSelected(row)">
-            </mat-checkbox>
-          </td>
-        </ng-container>
-
-
-
-        <!-- 編號 -->
-        <ng-container matColumnDef="position">
-          <th mat-header-cell *matHeaderCellDef> 編號</th>
-          <td mat-cell *matCellDef="let element"> {{element.position}}</td>
-        </ng-container>
-
-        <!-- 名稱 -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> 名稱 </th>
-          <td mat-cell *matCellDef="let element">
-            @if (element.state == '進行中') {
-            <p [routerLink]="['/innerPage']" class="routerCss">
+          <!-- 名稱 -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> 名稱 </th>
+            <td mat-cell *matCellDef="let element">
+              @if (element.state == '進行中') {
+              <p [routerLink]="['/innerPage']" class="routerCss">
+                {{element.name}}
+              </p>
+              }
+              @else {
               {{element.name}}
-            </p>
-            }
-            @else {
-            {{element.name}}
-            }
-          </td>
-        </ng-container>
+              }
+            </td>
+          </ng-container>
 
-        <!-- 狀態 -->
-        <ng-container matColumnDef="state">
-          <th mat-header-cell *matHeaderCellDef> 狀態 </th>
-          <td mat-cell *matCellDef="let element"> {{element.state}} </td>
-        </ng-container>
+          <!-- 狀態 -->
+          <ng-container matColumnDef="state">
+            <th mat-header-cell *matHeaderCellDef> 狀態 </th>
+            <td mat-cell *matCellDef="let element"> {{element.state}} </td>
+          </ng-container>
 
-        <!-- 開始時間 -->
-        <ng-container matColumnDef="sDate">
-          <th mat-header-cell *matHeaderCellDef> 開始時間 </th>
-          <td mat-cell *matCellDef="let element"> {{element.sDate}} </td>
-        </ng-container>
+          <!-- 開始時間 -->
+          <ng-container matColumnDef="sDate">
+            <th mat-header-cell *matHeaderCellDef> 開始時間 </th>
+            <td mat-cell *matCellDef="let element"> {{element.sDate}} </td>
+          </ng-container>
 
-        <!-- 結束時間 -->
-        <ng-container matColumnDef="eDate">
-          <th mat-header-cell *matHeaderCellDef> 結束時間 </th>
-          <td mat-cell *matCellDef="let element"> {{element.eDate}} </td>
-        </ng-container>
+          <!-- 結束時間 -->
+          <ng-container matColumnDef="eDate">
+            <th mat-header-cell *matHeaderCellDef> 結束時間 </th>
+            <td mat-cell *matCellDef="let element"> {{element.eDate}} </td>
+          </ng-container>
 
-        <!-- 結果 -->
-        <ng-container matColumnDef="result">
-          <th mat-header-cell *matHeaderCellDef> 結果 </th>
-          <td mat-cell *matCellDef="let element">
-            @if (element.state == '進行中') {
-            <p [routerLink]="['/innerPage']" class="resultCss">
+          <!-- 結果 -->
+          <ng-container matColumnDef="result">
+            <th mat-header-cell *matHeaderCellDef> 結果 </th>
+            <td mat-cell *matCellDef="let element">
+              @if (element.state == '進行中') {
+              <p [routerLink]="['/innerPage']" class="resultCss">
+                {{element.result}}
+              </p>
+              }
+              @else if (element.state == '結束') {
+              <p [routerLink]="['/chart']" class="resultCss">
+                {{element.result}}
+              </p>
+              } @else {
               {{element.result}}
-            </p>
-            }
-            @else if (element.state == '結束') {
-            <p [routerLink]="['/chart']" class="resultCss">
-              {{element.result}}
-            </p>
-            } @else {
-            {{element.result}}
-            }
-          </td>
-        </ng-container>
+              }
+            </td>
+          </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{
               'cssA': row.state == '進行中',
               'cssB': row.state == '即將開始',
               'cssC': row.state == '結束',
             }">
-        </tr>
-      </table>
+          </tr>
+        </table>
 
-      <br><br>
-      <mat-paginator [pageSizeOptions]="[ 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
-      </mat-paginator>
+        <br><br>
+        <mat-paginator [pageSizeOptions]="[ 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+        </mat-paginator>
+      </div>
     </div>
   </div>
 </div>

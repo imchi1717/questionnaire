@@ -1,10 +1,63 @@
-table, th, td {
-  border:1px solid #10FC0C;
+table {
+  width: 100%;
+  background-color: #fafafa;
 }
-.background {
+.mat-elevation-z8{
   width: 1000px;
-  margin: 40px auto 0 auto;
+  margin: 30px auto 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  padding-bottom: 50px;
 }
-td {
+.background{
+  width: 100%;
+  height: auto;
+  background-color: #fafafa;
+}
+.searchCss{
   text-align: center;
+}
+.searchItem{
+  font-size: 14px;
+  padding-right: 5px;
+}
+.searchInput{
+  width: 160px;
+  height: 23px;
+  margin-right: 10px;
+  padding-left: 15px;
+  border-radius: 50px;
+  border: 2px solid #971D10;
+}
+tr:nth-child(odd)  {
+  background-color: #FCFCFC ;
+}
+tr, th, td {
+  border-bottom: 2px solid #971D10;
+}
+.cssA{
+  color: black;
+}
+.cssB{
+  color:#6c757d;
+}
+.cssC{
+  color:#6c757d;
+}
+.routerCss {
+  text-decoration: underline;
+  cursor:pointer;
+
+    &:hover {
+    color: #971D10;
+    }
+}
+.resultCss {
+  font-weight: 600;
+  cursor:pointer;
+    &:hover {
+    color: #971D10;
+    }
 }

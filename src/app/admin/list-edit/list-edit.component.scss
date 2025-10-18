@@ -4,30 +4,31 @@ table {
 }
 .mat-elevation-z8{
   width: 1000px;
-  margin: 15px auto 0 auto;
+  margin: 30px auto 0 0;
   border-radius: 12px;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
+  padding-bottom: 50px;
 }
 .background{
   width: 100%;
-  height: 100vh;
-  padding-top: 80px;
+  height: auto;
   background-color: #f8f9fa;
 }
 .searchCss{
   text-align: center;
 }
 .searchItem{
-  font-size: 15px;
+  font-size: 14px;
   padding-right: 5px;
 }
 .searchItem2{
-  width: 170px;
-  height: 30px;
+  width: 160px;
+  height: 23px;
   margin-right: 10px;
-  padding-left: 15px;
   border-radius: 50px;
-  border: 1px solid #10FC0C;
+  border: 2px solid #971D10;
 }
 
 tr:nth-child(odd)  {
@@ -35,7 +36,7 @@ tr:nth-child(odd)  {
 }
 
 tr, th, td {
-  border-bottom: 1px solid #10FC0C;
+  border-bottom: 2px solid #971D10;
 }
 
 .cssA{
@@ -52,33 +53,53 @@ tr, th, td {
   cursor:pointer;
 
     &:hover {
-    color: #10FC0C;
+    color: #971D10;
     }
 }
 .resultCss{
   font-weight: 600;
   cursor:pointer;
-
     &:hover {
-    color: #10FC0C;
+    color: #971D10;
     }
 }
-.iconCss{
-  margin: 15px auto 0 280px;
+.iconCss1{
+  position: relative;
+  margin-top: 35px;
+  margin-left: 170px;
+  margin-right: 15px;
+}
+.iconCss1:hover .hover{
+  display: block;
+}
+.iconCss2{
+  position: relative;
+  margin-left: 170px;
+  margin-right: 15px;
+}
+.iconCss2:hover .hover{
+  display: block;
+}
+.hover{
+  position: absolute;
+  display:none;
+  top: 11%;
+  right: 30px;
+  color: #971D10;
+  white-space: nowrap;
+  font-size: 12px;
 }
 .deleteCss{
-  padding-right: 5px;
   cursor:pointer;
 
     &:hover {
-    color: #10FC0C;
+    color: #971D10;
     }
 }
 .addCss{
-  padding-right: 5px;
   cursor:pointer;
 
     &:hover {
-    color: #10FC0C;
+    color: #971D10;
     }
 }

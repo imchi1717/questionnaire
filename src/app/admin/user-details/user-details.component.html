@@ -1,28 +1,29 @@
 <!-- 主題設計 -->
 <div class="container">
-  <img class="bigImage" src="/lemon.jpg">
-  <div class="mainTitleCss">{{ theme.mainTitle }}</div>
-  <div class="subtitleCss">{{ theme.subtitle }}</div>
+  <img class="bigImage" src="/banner5.png">
+  <div class="mainTitleCss">{{ theme?.mainTitle }}</div>
+  <div class="subtitleCss">{{ theme?.subtitle }} </div>
 </div>
 
 <div class="dateCss">
-  <span>問卷時間 : {{ theme.sDate }}</span> ~ <span>{{ theme.eDate }}</span>
+  <span>問卷時間 : {{ theme?.sDate }}</span> ~ <span>{{ theme?.eDate }}</span>
 </div>
 
 <div class="background">
   <div class="themeCss">
-    <h3>主題 : {{ theme.theme }}</h3>
+    <h3>主題：{{ theme?.theme }}</h3>
     <div>
       {{ theme?.describe }}
     </div>
   </div>
 
 
+
   <!-- 基本資料 -->
   <div class="bodyCss">
     <p class="titleCss">填寫人基本資料</p>
     <hr class="divider">
-    <div class="basicCss">
+    <div>
       <p>姓名 : {{ userData.name }}</p>
       <p>手機 : {{ userData.phone }}</p>
       <p>E-mail : {{ userData.email }}</p>
@@ -31,11 +32,12 @@
   </div>
 
 
+
   <!-- Question -->
   <div class="bodyCss">
     <p class="titleCss">主要問題</p>
     <hr class="divider">
-    @for ( quesData of quesArray; track $index) {
+    @for (quesData of quesArray; track $index) {
       <h4>{{ quesData.quesId }}. {{ quesData.quesTitle }}</h4>
       @for ( optionsData of quesData.options; track $index) {
         @if ( quesData.type == 'S' ) {
@@ -54,8 +56,9 @@
 
   <!-- 按鈕 -->
   <div class="allBtnCss">
-    <button class="btn1Css" (click)="save()" >僅儲存</button>
-    <button class="btn1Css" (click)="publish()">儲存並發佈</button>
+    <button class="btn1Css" (click)="cancel()">取消</button>
+    <button class="btn1Css" (click)="check()">預覽</button>
   </div>
 
+</div>
 

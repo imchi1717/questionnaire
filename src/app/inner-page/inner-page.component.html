@@ -1,6 +1,6 @@
 <!-- 主題設計 -->
 <div class="container">
-  <img class="bigImage" src="/lemon.jpg">
+  <img class="bigImage" src="/banner5.png">
   <div class="mainTitleCss">{{ theme?.mainTitle }}</div>
   <div class="subtitleCss">{{ theme?.subtitle }} </div>
 </div>
@@ -23,7 +23,7 @@
   <div class="bodyCss">
     <p class="titleCss">填寫人基本資料</p>
     <hr class="divider">
-    <div class="basicCss">
+    <div>
       <p>姓名 : {{ userData.name }}</p>
       <p>手機 : {{ userData.phone }}</p>
       <p>E-mail : {{ userData.email }}</p>
@@ -37,7 +37,7 @@
   <div class="bodyCss">
     <p class="titleCss">主要問題</p>
     <hr class="divider">
-    @for ( quesData of quesArray; track $index) {
+    @for (quesData of quesArray; track $index) {
       <h4>{{ quesData.quesId }}. {{ quesData.quesTitle }}</h4>
       @for ( optionsData of quesData.options; track $index) {
         @if ( quesData.type == 'S' ) {

@@ -7,8 +7,6 @@ export class QuesDataService {
 
   constructor() { }
 
-
-
   // 個人檔案假資料
   userData = {
     name: '李李',
@@ -22,7 +20,6 @@ export class QuesDataService {
     account: 'imchi',
     password: '1717'
   }
-
 
   // 問題假資料
   // 複選M 單選S 文字選項T
@@ -54,4 +51,17 @@ export class QuesDataService {
       answer: ''
     }
   ]
+
+  // 取得所有題目
+  getQues() {
+    return this.quesArray;
+  }
+
+  // 新增題目
+  addQues(newQues: any) {
+    this.quesArray.push({
+      ...newQues,
+      quesId: (this.quesArray.length + 1).toString(), // 自動編號
+    });
+  }
 }

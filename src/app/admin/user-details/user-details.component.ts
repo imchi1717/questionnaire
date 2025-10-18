@@ -26,19 +26,39 @@ export class UserDetailsComponent {
   ngOnInit(): void {
     // 從service抓theme資訊於此頁面
     this.theme = this.themeDataService.theme;
+
     // 從service抓user資訊於此頁面
     this.userData = this.quesDataService.userData;
+
     // 從service抓user題目於此頁面
     this.quesArray = this.quesDataService.quesArray;
   }
 
-  // 按鈕
-  save() {
-    this.router.navigateByUrl('/checkEdit');
+  // 取消按鈕
+  cancel() {
+    // 逐題清空答案
+    for (let serviceData of this.quesDataService.quesArray) {
+      // 單選題
+      if (serviceData.type == "S" || serviceData.type == "T") {
+        serviceData.answer = "";
+      }
+      // 多選題
+      if (serviceData.type == "M") {
+        for (let serviceData2 of serviceData.options) {
+          // 若型態不等於 string
+          if(typeof serviceData2 !== "string") {
+            serviceData2.checkBoolean = false;
+          }
+        }
+      }
+    }
+    // 回到 list 頁面
+    this.router.navigateByUrl('/list');
   }
 
-  publish() {
+  check() {
     this.quesAns = this.quesDataService.quesArray;
-    this.router.navigateByUrl('/listEdit');
+    console.log(this.quesAns);
+    this.router.navigateByUrl('/check');
   }
 }

@@ -39,7 +39,7 @@ export class InnerPageComponent {
     this.quesArray = this.quesDataService.quesArray;
   }
 
-  // 按鈕
+  // 取消按鈕
   cancel() {
     // 逐題清空答案
     for (let serviceData of this.quesDataService.quesArray) {
