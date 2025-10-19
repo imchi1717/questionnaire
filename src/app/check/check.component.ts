@@ -1,9 +1,10 @@
-import { ThemeDataService } from './../@services/theme-data.service';
 import { QuesDataService } from './../@services/ques-data.service';
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogSendComponent } from '../@dialog/dialog-send/dialog-send.component';
+import { theme, userData, multiQues, singleQues, textQues, ques } from '../@interface/ques-interface';
+
 
 @Component({
   selector: 'app-check',
@@ -17,29 +18,30 @@ import { DialogSendComponent } from '../@dialog/dialog-send/dialog-send.componen
 })
 export class CheckComponent {
 
-  userData!: any;
-  theme!: any;
-  quesArray: any[] = [];
-  quesAns!: any;
+  userData!: userData;
+  theme!: theme;
+  quesArray: ques[] = [];
+  singleQues: singleQues[] = [];
+  multiQuesArray: multiQues[] = [];
+  textQues: textQues[] = [];
+  answer!: ques[];
   readonly dialog = inject(MatDialog);
 
 
   constructor(
     private router: Router,
-    private quesDataService: QuesDataService,
-    private themeDataService: ThemeDataService,) {}
+    private quesDataService: QuesDataService,) { }
 
 
   ngOnInit(): void {
-    // 從service抓theme資訊於此頁面
-    this.theme = this.themeDataService.theme;
-    // 從service抓user資訊於此頁面
+    // 從service抓資訊於此頁面
+    this.theme = this.quesDataService.theme;
     this.userData = this.quesDataService.userData;
-    // 從service抓question資訊於此頁面
     this.quesArray = this.quesDataService.quesArray;
-    this.quesAns = this.quesDataService.quesArray;
+    this.singleQues = this.quesArray.filter(item => item.type == 'S') as singleQues[];
+    this.multiQuesArray = this.quesArray.filter(item => item.type == 'M') as multiQues[];
+    this.textQues = this.quesArray.filter(item => item.type == 'T') as textQues[];
   }
-
 
   // 按鈕
   revise() {
@@ -48,6 +50,19 @@ export class CheckComponent {
 
   // 打開dialog
   openDialog() {
-    this.dialog.open(DialogSendComponent,);
+    // 逐題清空答案
+    for (let quesData of this.quesDataService.quesArray) {
+      // 單選題
+      if (quesData.type == "S" || quesData.type == "T") {
+        quesData.answer = "";
+      }
+      // 多選題
+      if (quesData.type == "M") {
+        for (let optionData of quesData.options) {
+          optionData.checkBoolean = false;
+        }
+      }
+    }
+    this.dialog.open(DialogSendComponent);
   }
 }

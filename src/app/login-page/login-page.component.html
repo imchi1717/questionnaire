@@ -7,17 +7,17 @@
       <!-- 登入 -->
       <mat-tab label="登入">
         <div class="titleBox">
-          <div style="letter-spacing: 1px; padding-top: 30px; padding-bottom: 10px; font-size: 18px; font-weight: bold;">會員登入</div>
+          <div style="letter-spacing: 1px; padding-top: 30px; padding-bottom: 10px; font-size: 16px; font-weight: 500;">會員登入</div>
           <hr style="border-color:#971D10; width: 40px; margin: 10px auto; margin-bottom: 20px;">
         </div>
         <div class="inputBox">
           <label>帳號</label>
-          <input class="inputCss" [(ngModel)]="userAccount.account" placeholder="your account">
+          <input class="inputCss" [(ngModel)]="userAccount" placeholder="your account">
         </div>
 
         <div class="inputBox">
           <label>密碼</label>
-          <input class="inputCss" [(ngModel)]="userAccount.password" placeholder="your password">
+          <input class="inputCss" [(ngModel)]="userAccount" placeholder="your password">
         </div>
 
         <div class="accountCss">還沒註冊帳號嗎? 點按鈕"註冊"一個!</div>
@@ -27,7 +27,7 @@
 
       <!-- 註冊 -->
       <mat-tab label="註冊">
-        <div style="letter-spacing: 1px; padding-top: 20px; padding-bottom: 10px; font-size: 18px; font-weight: bold;">會員註冊</div>
+        <div style="letter-spacing: 1px; padding-top: 20px; padding-bottom: 10px; font-size: 16px; font-weight: 500;">會員註冊</div>
         <hr style="border-color:#971D10; width: 40px; margin: 10px auto; margin-bottom: 20px;">
         <div class="inputBox2">
           <label>姓名</label>

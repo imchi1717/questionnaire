@@ -52,9 +52,9 @@
   margin: 0 auto;
 }
 .themeCss{
-  text-align: center;
-  margin: 40px;
-  font-size: 14px;
+  text-align: left;
+  margin-bottom: 40px;
+  font-size: 13px;
 }
 .allBtnCss{
   text-align: center;
@@ -86,4 +86,14 @@
 }
 .divider{
   border-top: 1px solid #971D10;
+}
+.btnEditBox {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  margin-top: 30px;
+}
+.ansCss {
+  font-size: 14px;
+  margin-left: 20px;
 }

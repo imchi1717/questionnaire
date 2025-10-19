@@ -18,7 +18,7 @@ export class DialogSendComponent {
   readonly dialogRef = inject(MatDialogRef<DialogSendComponent>);
   readonly data = inject<any>(MAT_DIALOG_DATA);
 
-  constructor( private router: Router) {}
+  constructor( private router: Router ) {}
 
 
   onClick() {

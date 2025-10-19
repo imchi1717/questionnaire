@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuesDataService } from '../../@services/ques-data.service';
-import { ThemeDataService } from '../../@services/theme-data.service';
 import { FormsModule } from '@angular/forms';
+import { theme, ques} from '../../@interface/ques-interface';
 
 @Component({
   selector: 'app-ckeck-edit',
@@ -12,34 +12,32 @@ import { FormsModule } from '@angular/forms';
 })
 export class CkeckEditComponent {
 
-  userData!: any;
-  theme!: any;
-  quesArray: any[] = [];
-  quesAns!: any;
+  theme!: theme;
+  quesArray: ques[] = [];
+
 
 
   constructor(
     private router: Router,
-    private quesDataService: QuesDataService,
-    private themeDataService: ThemeDataService,) {}
+    private quesDataService: QuesDataService,) {}
 
 
   ngOnInit(): void {
-    // 從service抓theme資訊於此頁面
-    this.theme = this.themeDataService.theme;
-    // 從service抓user資訊於此頁面
-    this.userData = this.quesDataService.userData;
-    // 從service抓user題目於此頁面
-    this.quesArray = this.quesDataService.quesArray;
+    // 從service抓資訊於此頁面
+    this.quesArray = this.quesDataService.getQues();
+    this.theme = this.quesDataService.theme;
   }
 
   // 按鈕
+  back() {
+    this.router.navigate(['/quesNameEdit']);
+  }
   save() {
     this.router.navigateByUrl('/checkEdit');
   }
 
   publish() {
-    this.quesAns = this.quesDataService.quesArray;
+    let newQues = this.quesDataService.quesArray;
     this.router.navigateByUrl('/listEdit');
   }
 }

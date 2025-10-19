@@ -1,14 +1,16 @@
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { BootstrapOptions, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogUserComponent } from '../../@dialog/dialog-user/dialog-user.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-header',
   imports: [
     RouterLink,
     RouterLinkActive,
-    RouterOutlet
+    RouterOutlet,
+    MatIconModule
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
@@ -25,18 +27,22 @@ export class HeaderComponent {
     this.router.events.subscribe((res) => {
       // 抓路由回傳的生命週期中的路由切換結束(NavigationEnd)
       if (res instanceof NavigationEnd) {
-        this.isLogin = (res.url == '/loginPage');
+        this.isLogin = (res.url == '/list' || res.url == '/listEdit' );
       }
     });
   }
 
+  // logo
+  logoBtn() {
+    this.router.navigateByUrl('loginPage');
+  }
 
   // 個人資料dialog
   readonly dialog = inject(MatDialog);
   openUser() {
     const dialogRef = this.dialog.open(DialogUserComponent,{
       width: '330px',
-      height: '350px',
+      height: '340px',
     })
   }
 

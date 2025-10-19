@@ -109,6 +109,12 @@ label {
     background: #fafafa;
   }
 }
+/* 選中效果 */
+.activeBtn {
+  background-color: #fafafa;
+  color: #971D10;
+  border: 2px solid #971D10;
+}
 
 .mat-step-icon-selected {
   background-color: #971D10;
@@ -117,10 +123,12 @@ label {
 .btnEditBox {
   display: flex;
   justify-content: left;
+  margin-top: 30px;
+  font-weight: 500;
+  font-size: 14px;
 }
 
 .iconBox {
-  margin-top: 18px;
   margin-right: 10px;
 }
 .iconCss {
@@ -163,4 +171,7 @@ label {
   height: 23px;
   margin-top: 5px;
   margin-bottom: 3px;
+}
+.ansCss {
+  padding-left: 70px;
 }

@@ -2,24 +2,26 @@
   text-align: center;
   max-width: 1000px;  /* 限制寬度 */
   margin: 80px auto; /* 上下 80px，左右 auto 讓它置中 */
+  font-size: 14px;
 }
 .dateCss{
   text-align: right;
   margin-right: 30px;
   margin-top: 20px;
+  font-size: 14px;
 }
 
 .chartBox{
   width: 800px;
   display: flex;
   align-items: center; /* 水平置中 */
-  margin: 30px auto;
+  margin: 20px auto;
 }
 .chartCss{
   margin-top: 80px;
 }
 .chartIdCss{
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   margin-left: 200px
 }
@@ -27,16 +29,17 @@
   text-align: left;
   margin-left: 220px;
   margin-top: 10px;
+  font-size: 14px;
 }
 .btn1Css{
   height: 40px;
   width: 70px;
-  border-radius: 50px;
+  border-radius: 30px;
   background: #971D10;
   border: 2px solid #971D10;
-  color: black;
-  font-size: 15px;
-  font-weight: bold;
+  color: #fafafa;
+  font-size: 13px;
+  font-weight: 500;
   letter-spacing: 1px;
   text-align: center;
   margin-right: 10px;
@@ -44,8 +47,8 @@
   cursor:pointer;
 
   &:hover {
-    color: #10FC0C;
-    background: black;
+    color: #971D10;
+    background: #fafafa;
   }
 }
 .btnBox{

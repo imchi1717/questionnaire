@@ -43,9 +43,6 @@ export class ListComponent {
   }
 
 
-
-
-
   // 即時搜尋
   searchInput() {
     // 開一個空陣列儲存篩選的資料
@@ -57,11 +54,6 @@ export class ListComponent {
     }
     // 篩選完的資料等於表格目前的資料
     this.dataSource.data = tidyData;
-  }
-
-
-  test() {
-
   }
 
   // 時間篩選

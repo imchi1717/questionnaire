@@ -1,7 +1,8 @@
+import { QuesDataService } from './../@services/ques-data.service';
 import { Router } from '@angular/router';
-import { ThemeDataService } from './../@services/theme-data.service';
 import { Component } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { theme } from '../@interface/ques-interface';
 
 @Component({
   selector: 'app-chart',
@@ -11,7 +12,7 @@ import Chart from 'chart.js/auto';
 })
 export class ChartComponent {
 
-  theme!: any;
+  theme!: theme;
   quesArray = [
     {
       quesId: '1',
@@ -42,12 +43,12 @@ export class ChartComponent {
   ]
 
   constructor (
-    private themeDataService: ThemeDataService,
+    private quesDataService: QuesDataService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.theme = this.themeDataService.theme
+    this.theme = this.quesDataService.theme
   }
 
 

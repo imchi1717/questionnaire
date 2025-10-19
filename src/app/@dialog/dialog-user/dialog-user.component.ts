@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { QuesDataService } from './../../@services/ques-data.service';
 import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
+import { userData } from '../../@interface/ques-interface';
 
 @Component({
   selector: 'app-dialog-user',
@@ -17,12 +18,7 @@ export class DialogUserComponent {
   readonly dialogRef = inject(MatDialogRef<DialogUserComponent>);
   readonly data = inject<any> (MAT_DIALOG_DATA);
 
-  userData = {
-    name: '',
-    phone: '',
-    email: '',
-    age: ''
-  };
+  userData!: userData;
 
   constructor(
     private router: Router,

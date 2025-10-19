@@ -52,9 +52,9 @@
   margin: 0 auto;
 }
 .themeCss{
-  text-align: center;
-  margin: 40px;
-  font-size: 14px;
+  text-align: left;
+  margin-bottom: 40px;
+  font-size: 13px;
 }
 .allBtnCss{
   text-align: center;
@@ -67,7 +67,7 @@
   border: 2px solid #971D10;
   color: #fafafa;
   font-size: 13px;
-  font-weight: bold;
+  font-weight: 500  ;
   letter-spacing: 1px;
   text-align: center;
   margin-right: 10px;
@@ -86,4 +86,24 @@
 }
 .divider{
   border-top: 1px solid #971D10;
+}
+
+.btnEditBox {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  margin-top: 30px;
+}
+.ansCss {
+  font-size: 14px;
+  margin-left: 20px;
+}
+/* 單選 */
+.ansCss input[type="radio"] {
+  margin-bottom: 10px;
+}
+
+/* 複選 */
+.ansCss input[type="checkbox"] {
+  margin-bottom: 10px;
 }

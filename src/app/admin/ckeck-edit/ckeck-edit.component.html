@@ -11,9 +11,9 @@
 
 <div class="background">
   <div class="themeCss">
-    <h3>主題 : {{ theme.theme }}</h3>
+    <h3>{{ theme.theme }}</h3>
     <div>
-      {{ theme?.describe }}
+      {{ theme.describe }}
     </div>
   </div>
 
@@ -35,25 +35,45 @@
   <div class="bodyCss">
     <p class="titleCss">主要問題</p>
     <hr class="divider">
-    @for ( quesData of quesArray; track $index) {
-      <h4>{{ quesData.quesId }}. {{ quesData.quesTitle }}</h4>
-      @for ( optionsData of quesData.options; track $index) {
-        @if ( quesData.type == 'S' ) {
-          <input type="radio"  name="{{quesData.quesId}}" value="{{optionsData}}" [(ngModel)]="quesData.answer"> {{ optionsData }}
-        }
-        @if ( quesData.type == 'M') {
-          <input type="checkbox" [(ngModel)]="optionsData.checkBoolean">{{ optionsData.name }}
-        }
-      }
-      @if ( quesData.type == 'T') {
-        <textarea placeholder="請輸入答案" [(ngModel)]="quesData.answer" ></textarea>
-      }
-    }
-  </div>
 
+       @for (quesData of quesArray; track $index) {
+
+        <div class="btnEditBox">
+          <!-- 必選 -->
+          @if (quesData.required == true) {
+            <span class="rqCss">*</span>
+          }
+          {{ $index + 1 }}. {{ quesData.quesTitle }}
+        </div>
+
+        <div class="ansCss">
+          <!-- 單選 -->
+          @if (quesData.type == 'S') {
+            @for (opt of quesData.options; track $index) {
+            <div>
+              <input type="radio" name="{{ quesData.quesId }}" [(ngModel)]="quesData.answer" [value]="opt">{{ opt }}
+            </div>
+            }
+          }
+
+          <!-- 複選 -->
+          @if (quesData.type == 'M') {
+            @for (opt of quesData.options; track $index) {
+            <div><input type="checkbox">{{ opt.name }}</div>
+            }
+          }
+
+          <!-- 文字 -->
+          @if (quesData.type == 'T') {
+            <div><textarea placeholder="使用者回答區"></textarea></div>
+          }
+        </div>
+      }
+    </div>
 
   <!-- 按鈕 -->
   <div class="allBtnCss">
+    <button class="btn1Css" (click)="back()" >修改</button>
     <button class="btn1Css" (click)="save()" >僅儲存</button>
     <button class="btn1Css" (click)="publish()">儲存並發佈</button>
   </div>

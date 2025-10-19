@@ -1,3 +1,4 @@
+import { basicQues, multiQues, ques, singleQues, textQues, theme } from './../../@interface/ques-interface';
 import { QuesDataService } from './../../@services/ques-data.service';
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
@@ -7,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-ques-name-edit',
@@ -17,7 +19,8 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    CommonModule
   ],
   templateUrl: './ques-name-edit.component.html',
   styleUrl: './ques-name-edit.component.scss'
@@ -29,38 +32,43 @@ export class QuesNameEditComponent {
     private router: Router
   ) { }
 
-  quesEdit!: string;
-  quesName!: string;
-  quesDescription!: string;
-  sDate!: string;
-  eDate!: string;
+  theme: theme = {
+    id: '',
+    mainTitle: '',
+    subtitle: '',
+    sDate: '',
+    eDate: '',
+    theme: '',
+    describe: '',
+  }
   isLinear = false;
-  optionInput: string[] = ['', ''];
-  extraOptions: string[] = [];
-  quesTitle!: string;
-  required = false;
-  quesArray: any[] = [];
-  newQues: any[] =[];
+  optionInput: string[] = ['', '']; // 固定選項
+  extraOptions: string[] = []; // 額外選項
+  quesArray: ques[] = [];
+  quesType!: string;
+  quesTitle = '';
+  required = true;
+  today!: string;
+  newQues!: ques;
+
+  ngOnInit() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = ('0' + (now.getMonth() + 1)).slice(-2);
+    const day = ('0' + now.getDate()).slice(-2);
+    this.today = `${year}-${month}-${day}`;
+  }
+
 
 
   // 題目類型
   choose(res: string) {
-    this.quesEdit = res;
-  }
-
-  // 返回按鈕
-  backPage() {
-    this.router.navigateByUrl('/listEdit')
-  }
-  // 預覽按鈕
-  checkPage() {
-    this.router.navigateByUrl('/checkEdit');
-    this.quesDataService.getQues();
+    this.quesType = res;
   }
 
   // 新增選項icon
   addBtn() {
-    this.extraOptions.push('');  // 新增空字串
+    this.extraOptions.push('');
   }
 
   // 刪除選項icon
@@ -74,38 +82,66 @@ export class QuesNameEditComponent {
     if (!this.quesTitle.trim()) {
       return;
     }
-    // 判斷題目類型
-    if (this.quesEdit == 'S') {
-      this.newQues.push(
-        this.quesTitle,
-        this.quesEdit,
-        this.optionInput
-    )
-    // } else if (this.quesEdit == 'M') {
-    //   this.newQues = {
-    //     quesTitle: this.quesTitle,
-    //     type: this.quesEdit,
-    //     options: [],
-    //   }
-    // } else {
-    //   this.newQues = {
-    //     quesTitle: this.quesTitle,
-    //     type: this.quesEdit,
-    //     options: [],
+
+    // 單選題
+    if (this.quesType == 'S') {
+      this.newQues = {
+        quesId: (this.quesDataService.quesArray.length + 1).toString(),
+        required: this.required,
+        quesTitle: this.quesTitle,
+        type: "S",
+        options: [...this.optionInput, ...this.extraOptions],
+        answer: '',
+      }
+      // 複選題
+    } else if (this.quesType == 'M') {
+      this.newQues = {
+        quesId: (this.quesDataService.quesArray.length + 1).toString(),
+        required: this.required,
+        quesTitle: this.quesTitle,
+        type: "M",
+        options: [
+          ...this.extraOptions.map(opt => ({ name: opt, checkBoolean: false })),
+          { name: this.optionInput[0], checkBoolean: false },
+          { name: this.optionInput[1], checkBoolean: false }
+        ],
+      }
+      // 文字題
+    } else if (this.quesType == 'T') {
+      this.newQues = {
+        quesId: (this.quesDataService.quesArray.length + 1).toString(),
+        required: this.required,
+        quesTitle: this.quesTitle,
+        type: "T",
+        options: [],
+        answer: '',
       };
-      // 即時顯示
-      this.quesArray.push(this.newQues);
-      console.log(this.newQues);
+    } else {
+      return;
+    }
+    // 傳新增題目給 service
+    this.quesDataService.quesArray.push(this.newQues);
 
-      // 傳新增題目給 service
-      this.quesDataService.addQues(this.newQues);
+    // 即時顯示
+    this.quesArray.push(this.newQues);
 
-      // 清除輸入
-      this.quesTitle = '';
-      this.optionInput = ['', ''];
-      this.extraOptions = [];
-      this.required = false;
+    // 清除輸入
+    this.quesTitle = '';
+    this.optionInput = ['', ''];
+    this.extraOptions = [];
+    this.required = false;
+  }
 
 
+  // 返回按鈕
+  backPage() {
+    this.router.navigateByUrl('/listEdit')
+  }
+
+  // 預覽按鈕
+  checkPage() {
+    this.quesDataService.quesArray = this.quesArray;
+    this.quesDataService.theme = this.theme;
+    this.router.navigateByUrl('/checkEdit');
   }
 }

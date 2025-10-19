@@ -11,9 +11,9 @@
 
 <div class="background">
   <div class="themeCss">
-    <h3>主題 : {{ theme.theme }}</h3>
+    <h3>{{ theme.theme }}</h3>
     <div>
-      {{ theme?.describe }}
+      {{ theme.describe }}
     </div>
   </div>
 
@@ -32,29 +32,39 @@
   </div>
 
 
-
-
-  <!-- Question -->
+  <!-- 問題 -->
   <div class="bodyCss">
     <p class="titleCss">主要問題</p>
     <hr class="divider">
-    @for ( quesData of quesArray; track $index) {
-      <h4>{{ quesData.quesId }}. {{ quesData.quesTitle }}</h4>
-      @if ( quesData.type == 'S' ) {
-      {{ quesData.answer }}
-      }
-      @for ( optionsData of quesData.options; track $index) {
-        @if ( quesData.type == 'M' && optionsData.checkBoolean == true) {
-        {{ optionsData.name }}
+
+    <!-- 單選題 -->
+    @for (ques of singleQues; track $index) {
+      <div class="btnEditBox">{{ ques.quesId }}. {{ ques.quesTitle }}</div>
+      <div class="ansCss">
+        {{ ques.answer }}
+      </div>
+    }
+
+    <!-- 複選題 -->
+    @for (ques of multiQuesArray; track $index) {
+      <div class="btnEditBox">{{ ques.quesId }}. {{ ques.quesTitle }}</div>
+      @for (option of ques.options; track $index) {
+        @if (option.checkBoolean == true) {
+        <div class="ansCss">
+          {{ option.name }}
+        </div>
         }
       }
-      @if ( quesData.type == 'T') {
-      {{ quesData.answer }}
-      }
+    }
+
+    <!-- 文字題 -->
+    @for (ques of textQues; track $index) {
+      <div class="btnEditBox">{{ ques.quesId }}. {{ ques.quesTitle }}</div>
+      <div class="ansCss">
+        {{ques.answer }}
+      </div>
     }
   </div>
-
-
 
 
 

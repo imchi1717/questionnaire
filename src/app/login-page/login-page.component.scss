@@ -27,10 +27,10 @@
   width: 200px;
   border: none; /* 清除所有邊框 */
   border-bottom: 1px solid black; /* 底線樣式 */
-  padding: 10px 15px; /* 上下內距，避免文字太貼邊 */
+  padding: 8px 10px; /* 上下內距，避免文字太貼邊 */
   font-size: 14px; /* 調整文字大小 */
   background-color: rgba(255, 255, 255, 0.9); /* 半透明背景 */
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
 .inputCss:focus {
@@ -42,10 +42,11 @@
   display: flex;
   align-items: center;
   margin-top: 15px;
+  font-size: 15px;
 }
 
 .inputBox label {
-  width: 65px;
+  width: 60px;
   text-align: center;
 }
 
@@ -53,10 +54,11 @@
   display: flex;
   align-items: center;
   margin-top: 10px;
+  font-size: 15px;
 }
 
 .inputBox2 label {
-  width: 65px;
+  width: 60px;
   text-align: center;
 }
 
@@ -74,7 +76,7 @@
   border-radius: 50px;
   background: #971D10;
   border: 2px solid #971D10;
-  color: #FFF9E6;
+  color: #fafafa;
   font-size: 15px;
   font-weight: bold;
   letter-spacing: 1px;
@@ -84,7 +86,7 @@
 
   &:hover {
     color: #971D10;
-    background: #FFF9E6;
+    background: #fafafa;
   }
 }
 .btnCss2{
@@ -93,7 +95,7 @@
   border-radius: 50px;
   background: #971D10;
   border: 2px solid #971D10;
-  color: #FFF9E6;
+  color: #fafafa;
   font-size: 15px;
   font-weight: bold;
   letter-spacing: 1px;
@@ -103,7 +105,7 @@
 
   &:hover {
     color: #971D10;
-    background: #FFF9E6;
+    background: #fafafa;
   }
 }
 
