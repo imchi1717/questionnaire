@@ -1,0 +1,18 @@
+<div class="background">
+
+  <!-- dialog標題 -->
+  <div class="diaTitle" mat-dialog-title>溫馨提醒</div>
+  <div style="color: #971D10; font-size: 7px; letter-spacing: 1px; text-align: center; margin-left: 7px;"> ▋▋▋</div>
+
+  <!-- dialog內容 -->
+  <mat-dialog-content>
+    <p>請確認是否刪除，若是請按「確認」</p>
+  </mat-dialog-content>
+
+  <!-- dialog按鈕 -->
+  <mat-dialog-actions class="allBtnCss">
+    <button class="btnCss" (click)="cancel()">取消</button>
+    <button class="btnCss" (click)="confirm()">確認</button>
+  </mat-dialog-actions>
+</div>
+

@@ -30,7 +30,7 @@ export class CkeckEditComponent {
 
   // 按鈕
   back() {
-    this.router.navigate(['/quesNameEdit']);
+    this.router.navigateByUrl('/quesNameEdit');
   }
   save() {
     this.router.navigateByUrl('/checkEdit');

@@ -1,1 +1,59 @@
+<div class="background">
+  <!-- 問卷標題 -->
+  <div style="text-align: center; padding-bottom: 10px; padding-top: 50px; width: 950px; margin: 0 auto 0 auto;">
+    <div style="font-size: 30px; font-weight: 500; padding-bottom: 10px; letter-spacing: 3px;">問卷回饋</div>
+    <div style="font-size: 13px; padding-top: 10px; letter-spacing: 1px;">
+      打開清單就能窺探使用者的小宇宙～每一份回覆都是他們真實又可愛的想法！
+    </div>
+    <div style="color: #971D10; font-size: 10px; padding-top: 20px; letter-spacing: 1px;"> ▋▋▋</div>
+  </div>
 
+
+  <!-- 表格區塊 -->
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+
+      <!-- 編號 -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> 編號 </th>
+        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+      </ng-container>
+
+      <!-- 名稱 -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> 名稱 </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- 開始時間 -->
+      <ng-container matColumnDef="fillDate">
+        <th mat-header-cell *matHeaderCellDef> 填寫時間 </th>
+        <td mat-cell *matCellDef="let element"> {{element.fillDate}} </td>
+      </ng-container>
+
+      <!-- 結果 -->
+      <ng-container matColumnDef="result">
+        <th mat-header-cell *matHeaderCellDef> 查看結果 </th>
+        <td mat-cell *matCellDef="let element">
+          <p [routerLink]="['/userDetails']" class="resultCss">
+            {{element.result}}
+          </p>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <br><br>
+    <mat-paginator [pageSizeOptions]="[ 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
+  </div>
+
+
+    <!-- 按鈕 -->
+  <div class="allBtnCss">
+    <button class="btn1Css" (click)="back()">上一頁</button>
+  </div>
+
+</div>

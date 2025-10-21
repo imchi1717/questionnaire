@@ -1,6 +1,6 @@
 table {
   width: 100%;
-  background-color: #f8f9fa;
+  background-color: #f6f6f6;
 }
 .mat-elevation-z8{
   width: 1000px;
@@ -14,7 +14,7 @@ table {
 .background{
   width: 100%;
   height: auto;
-  background-color: #f8f9fa;
+  background-color: #fafafa;
 }
 .searchCss{
   text-align: center;
@@ -23,11 +23,19 @@ table {
   font-size: 14px;
   padding-right: 5px;
 }
-.searchItem2{
+.searchInputCss{
   width: 160px;
   height: 23px;
-  margin-right: 10px;
-  border-radius: 50px;
+  margin-right: 20px;
+  padding-left: 12px;
+  border-radius: 10px;
+  border: 2px solid #971D10;
+}
+.searchInput2Css {
+  width: 160px;
+  height: 19px;
+  margin-right: 20px;
+  border-radius: 10px;
   border: 2px solid #971D10;
 }
 
@@ -46,7 +54,7 @@ tr, th, td {
   color:#6c757d;
 }
 .cssC{
-  color:#6c757d;
+  color: black;
 }
 .routerCss{
   text-decoration: underline;
@@ -57,7 +65,8 @@ tr, th, td {
     }
 }
 .resultCss{
-  font-weight: 600;
+  font-weight: 400;
+  font-size: 14px;
   cursor:pointer;
     &:hover {
     color: #971D10;

@@ -1,8 +1,9 @@
 table {
   width: 100%;
-  background-color: #fafafa;
+  background-color: #f6f6f6;
 }
-.mat-elevation-z8{
+
+.mat-elevation-z8 {
   width: 1000px;
   margin: 30px auto 0 auto;
   border-radius: 12px;
@@ -11,54 +12,74 @@ table {
   z-index: 1;
   padding-bottom: 50px;
 }
-.background{
+
+.background {
   width: 100%;
   height: auto;
   background-color: #fafafa;
 }
-.searchCss{
+
+.searchCss {
   text-align: center;
 }
-.searchItem{
+
+.searchItem {
   font-size: 14px;
   padding-right: 5px;
 }
-.searchInput{
+
+.searchInputCss {
   width: 160px;
   height: 23px;
-  margin-right: 10px;
-  padding-left: 15px;
-  border-radius: 50px;
+  margin-right: 20px;
+  border-radius: 10px;
   border: 2px solid #971D10;
 }
-tr:nth-child(odd)  {
-  background-color: #FCFCFC ;
+
+.searchInput2Css {
+  width: 160px;
+  height: 19px;
+  margin-right: 20px;
+  border-radius: 10px;
+  border: 2px solid #971D10;
 }
-tr, th, td {
+
+tr:nth-child(odd) {
+  background-color: #fcfcfc;
+}
+
+tr,
+th,
+td {
   border-bottom: 2px solid #971D10;
 }
-.cssA{
+
+.cssA {
   color: black;
 }
-.cssB{
-  color:#6c757d;
+
+.cssB {
+  color: #6c757d;
 }
-.cssC{
-  color:#6c757d;
+
+.cssC {
+  color: black;
 }
+
 .routerCss {
   text-decoration: underline;
-  cursor:pointer;
+  cursor: pointer;
 
-    &:hover {
+  &:hover {
     color: #971D10;
-    }
+  }
 }
+
 .resultCss {
-  font-weight: 600;
-  cursor:pointer;
-    &:hover {
+  font-weight: 400;
+  font-size: 14px;
+  cursor: pointer;
+  &:hover {
     color: #971D10;
-    }
+  }
 }
-

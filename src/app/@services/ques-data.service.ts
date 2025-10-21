@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { theme, userData, userAccount, ques, survey } from '../@interface/ques-interface';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ export class QuesDataService {
 
   // 一個問卷陣列，每份問卷裡有題目
   allSurveys: survey[] = [];
+  editBoolean: boolean = false;
 
   // 主題假資料
   theme: theme = {
@@ -38,6 +40,8 @@ export class QuesDataService {
     account: 'imchi',
     password: '1717'
   }
+
+
 
   // 問題假資料
   // 複選M 單選S 文字選項T
@@ -94,5 +98,20 @@ export class QuesDataService {
   // 取得所有問卷
   getAllSurveys() {
     return this.allSurveys;
+  }
+
+  // 判斷登入者
+  private admin$ = new BehaviorSubject<boolean>(false);
+  // 取得可觀察物件
+  _admin$ = this.admin$.asObservable();
+
+  // 隱藏admin
+  hide() {
+    this.admin$.next(false);
+  }
+
+  // 打開admin
+  show() {
+    this.admin$.next(true);
   }
 }

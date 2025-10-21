@@ -1,20 +1,24 @@
-.container{
+.container {
   position: relative;
   width: 100%;
   height: auto;
 }
+
 .bigImage {
   width: 100%;
   display: block;
   position: relative;
-  z-index: 1; /* 背景圖 */
+  z-index: 1;
+  /* 背景圖 */
 }
-.dateCss{
+
+.dateCss {
   text-align: right;
   margin-right: 30px;
   margin-top: 20px;
   font-size: 14px;
 }
+
 .mainTitleCss {
   position: absolute;
   top: 50%;
@@ -27,8 +31,10 @@
   font-weight: bolder;
   font-family: "Impact", sans-serif;
   letter-spacing: 4px;
-  z-index: 2; /* 文字在圖片上方 */
+  z-index: 2;
+  /* 文字在圖片上方 */
 }
+
 .subtitleCss {
   position: absolute;
   top: 70%;
@@ -36,9 +42,11 @@
   transform: translate(-50%, -50%);
   color: white;
   font-size: 20px;
-  z-index: 2; /* 文字在圖片上方 */
+  z-index: 2;
+  /* 文字在圖片上方 */
 }
-.bodyCss{
+
+.bodyCss {
   border-radius: 16px;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
   padding: 30px 65px;
@@ -46,20 +54,24 @@
   background: #fff;
   font-size: 14px;
 }
-.background{
+
+.background {
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
 }
-.themeCss{
+
+.themeCss {
   text-align: left;
   margin-bottom: 40px;
   font-size: 13px;
 }
-.allBtnCss{
+
+.allBtnCss {
   text-align: center;
 }
-.btn1Css{
+
+.btn1Css {
   height: 35px;
   width: 65px;
   border-radius: 50px;
@@ -72,7 +84,7 @@
   text-align: center;
   margin-right: 10px;
   margin-bottom: 70px;
-  cursor:pointer;
+  cursor: pointer;
 
   &:hover {
     color: #971D10;
@@ -80,19 +92,22 @@
   }
 }
 
-.titleCss{
+.titleCss {
   font-size: 14px;
   font-weight: bold;
 }
-.divider{
+
+.divider {
   border-top: 1px solid #971D10;
 }
+
 .btnEditBox {
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 10px;
   margin-top: 30px;
 }
+
 .ansCss {
   font-size: 14px;
   margin-left: 20px;

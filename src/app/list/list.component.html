@@ -15,18 +15,18 @@
   <!-- 搜尋區塊 -->
   <div class="searchCss">
     <span class="searchItem">問卷名稱</span>
-    <input class="searchInput" [(ngModel)]="inputData" (keyup)="searchInput()">
+    <input class="searchInput2Css" [(ngModel)]="inputData" (keyup)="searchInput()">
     <span class="searchItem">狀態</span>
-    <select class="searchInput" [(ngModel)]="selectData" >
+    <select class="searchInputCss" [(ngModel)]="selectData" >
       <option value="">--Please choose--</option>
       <option value="ing">進行中</option>
       <option value="start">即將開始</option>
       <option value="end">結束</option>
     </select>
     <span class="searchItem">開始時間</span>
-    <input class="searchInput" type="date" [(ngModel)]="sDate" (change)="changeSDate()">
+    <input class="searchInputCss" type="date" [(ngModel)]="sDate" (change)="changeSDate()">
     <span class="searchItem">結束時間</span>
-    <input class="searchInput" type="date" [(ngModel)]="eDate" min="{{ sDate }}" (change)="changeEDate()">
+    <input class="searchInputCss" type="date" [(ngModel)]="eDate" min="{{ sDate }}" (change)="changeEDate()">
   </div>
 
   <!-- 表格區塊 -->

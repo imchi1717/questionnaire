@@ -4,7 +4,7 @@
     <!-- Stepper -->
     <!-- 問卷說明 -->
     <div class="stepperBox">
-      <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+      <mat-stepper [selectedIndex]="currentStep" orientation="vertical" [linear]="isLinear" #stepper>
         <mat-step>
           <ng-template matStepLabel>設定主題</ng-template>
           <div class="themeCss">
@@ -119,8 +119,8 @@
 
         <div class="btnEditBox">
           <div class="iconBox">
-            <mat-icon aria-hidden="false" aria-label="Example edit icon" fontIcon="edit"></mat-icon>
-            <mat-icon aria-hidden="false" aria-label="Example delete icon" fontIcon="delete"></mat-icon>
+            <mat-icon aria-hidden="false" aria-label="Example edit icon" fontIcon="edit" class="iconCss" (click)="editBtn($index)"></mat-icon>
+            <mat-icon aria-hidden="false" aria-label="Example delete icon" fontIcon="delete" class="iconCss" (click)="deleteBtn($index)"></mat-icon>
           </div>
 
           <!-- 必選 -->

@@ -1,4 +1,4 @@
-import { userData } from './../@interface/ques-interface';
+import { userData, userAccount } from './../@interface/ques-interface';
 import { QuesDataService } from './../@services/ques-data.service';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -6,8 +6,8 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/rou
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogSignInComponent } from '../@dialog/dialog-sign-in/dialog-sign-in.component';
-import { userAccount } from '../@interface/ques-interface';
 import { DialogRequiredComponent } from '../@dialog/dialog-required/dialog-required.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login-page',
@@ -17,6 +17,7 @@ import { DialogRequiredComponent } from '../@dialog/dialog-required/dialog-requi
     RouterLinkActive,
     FormsModule,
     MatTabsModule,
+    CommonModule
   ],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss'
@@ -29,20 +30,50 @@ export class LoginPageComponent {
     email: '',
     age: null,
   };
-
-  userAccount!: userAccount;
-
+  userAccount: userAccount = {
+    account: '',
+    password: '',
+  };
+  hidePassword = true;
+  selectedTab = 0; // 0 = 登入, 1 = 註冊
   readonly dialog = inject(MatDialog);
 
   constructor(
     private router: Router,
-    private quesDataService: QuesDataService) { }
+    private quesDataService: QuesDataService,) { }
 
+  // 密碼眼睛
+  eyeBtn() {
+    this.hidePassword = !this.hidePassword;
+  }
+
+  // "註冊"
+  textBtn() {
+    this.selectedTab = 1;
+  }
 
   // 登入按鈕
   loginbtn() {
+    //有沒有填所有資料
+    if (!this.userAccount.account || !this.userAccount.password) {
+      this.dialog.open(DialogRequiredComponent);
+      return;
+    }
     this.router.navigateByUrl('/list');
-    // 要寫if確認會員
+
+    // 確認管理者或使用者
+    if (this.userAccount.account == 'imchi' && this.userAccount.password == '5417') {
+      this.quesDataService.show();
+    } else {
+      this.quesDataService.hide();
+    }
+    this.quesDataService._admin$.subscribe((res) => {
+      if (res) {
+        this.router.navigateByUrl('listEdit');
+      } else {
+        this.router.navigateByUrl('list');
+      }
+    })
   }
 
   // 註冊按鈕

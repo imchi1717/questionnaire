@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
@@ -31,7 +30,7 @@ export class ListComponent {
   sDate!: string;
   eDate!: string;
 
-  readonly dialog = inject(MatDialog);
+
 
   displayedColumns: string[] = ['position', 'name', 'state', 'sDate', 'eDate', 'result'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
@@ -77,16 +76,16 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: '吃飯喜好', state: '進行中', sDate: '2025-10-09', eDate: '2025-12-09', result: '→'},
-  {position: 2, name: 'Helium', state: '即將開始', sDate: '2025-11-09', eDate: '2025-11-29', result: '→'},
-  {position: 3, name: 'Lithium', state: '進行中', sDate: '2025-08-09', eDate: '2025-08-12', result: '→'},
-  {position: 4, name: 'Beryllium', state: '結束', sDate: '2025-10-09', eDate: '2025-12-09', result: '→'},
-  {position: 5, name: 'Boron', state: '結束', sDate: '2025-09-09', eDate: '2026-03-09', result: '→'},
-  {position: 6, name: 'Carbon', state: '即將開始', sDate: '2025-12-28', eDate: '2026-05-09', result: '→'},
-  {position: 7, name: 'Nitrogen', state: '進行中', sDate: '2025-05-09', eDate: '2025-06-09', result: '→'},
-  {position: 8, name: 'Oxygen', state: '即將開始', sDate: '2025-10-19', eDate: '2025-11-09', result: '→'},
-  {position: 9, name: 'Fluorine', state: '即將開始', sDate: '2025-05-09', eDate: '2025-12-09', result: '→'},
-  {position: 10, name: 'Carbon', state: '即將開始', sDate: '2025-12-28', eDate: '2026-05-09', result: '→'},
-  {position: 11, name: 'Nitrogen', state: '進行中', sDate: '2025-05-09', eDate: '2025-06-09', result: '→'},
-  {position: 12, name: 'Oxygen', state: '即將開始', sDate: '2025-10-19', eDate: '2025-11-09', result: '→'},
+  {position: 1, name: '吃飯喜好', state: '進行中', sDate: '2025-10-09', eDate: '2025-12-09', result: '前往'},
+  {position: 2, name: 'Helium', state: '即將開始', sDate: '2025-11-09', eDate: '2025-11-29', result: '尚未開始'},
+  {position: 3, name: 'Lithium', state: '進行中', sDate: '2025-08-09', eDate: '2025-08-12', result: '前往'},
+  {position: 4, name: 'Beryllium', state: '結束', sDate: '2025-10-09', eDate: '2025-12-09', result: '統計圖'},
+  {position: 5, name: 'Boron', state: '結束', sDate: '2025-09-09', eDate: '2026-03-09', result: '統計圖'},
+  {position: 6, name: 'Carbon', state: '即將開始', sDate: '2025-12-28', eDate: '2026-05-09', result: '尚未開始'},
+  {position: 7, name: 'Nitrogen', state: '進行中', sDate: '2025-05-09', eDate: '2025-06-09', result: '前往'},
+  {position: 8, name: 'Oxygen', state: '即將開始', sDate: '2025-10-19', eDate: '2025-11-09', result: '尚未開始'},
+  {position: 9, name: 'Fluorine', state: '即將開始', sDate: '2025-05-09', eDate: '2025-12-09', result: '尚未開始'},
+  {position: 10, name: 'Carbon', state: '即將開始', sDate: '2025-12-28', eDate: '2026-05-09', result: '尚未開始'},
+  {position: 11, name: 'Nitrogen', state: '進行中', sDate: '2025-05-09', eDate: '2025-06-09', result: '前往'},
+  {position: 12, name: 'Oxygen', state: '即將開始', sDate: '2025-10-19', eDate: '2025-11-09', result: '尚未開始'},
 ];
