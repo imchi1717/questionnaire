@@ -4,30 +4,25 @@ import { Router } from '@angular/router';
 import { DialogSendComponent } from '../dialog-send/dialog-send.component';
 
 @Component({
-  selector: 'app-dialog-delete',
+  selector: 'app-dialog-fail',
   imports: [
     MatDialogActions,
     MatDialogContent,
-    MatDialogTitle,
-
+    MatDialogTitle
   ],
-  templateUrl: './dialog-delete.component.html',
-  styleUrl: './dialog-delete.component.scss'
+  templateUrl: './dialog-fail.component.html',
+  styleUrl: './dialog-fail.component.scss'
 })
-export class DialogDeleteComponent {
-  readonly dialogRef = inject(MatDialogRef<DialogDeleteComponent>);
+export class DialogFailComponent {
+
+  readonly dialogRef = inject(MatDialogRef<DialogSendComponent>);
   readonly data = inject<any>(MAT_DIALOG_DATA);
 
   constructor(private router: Router) { }
 
 
-  cancel() {
+  onClick() {
     this.dialogRef.close();
-  }
-
-  confirm() {
-
-    this.dialogRef.close('confirm');
-
+    this.router.navigateByUrl('/loginPage');
   }
 }

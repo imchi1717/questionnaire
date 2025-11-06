@@ -80,9 +80,11 @@ mark {
   padding-top: 20px;
   font-size: 14px;
 }
-.rqCss{
+
+.rqCss {
   color: #971D10;
 }
+
 label {
   padding-right: 10px;
   font-size: 14px;
@@ -109,6 +111,7 @@ label {
     background: #fafafa;
   }
 }
+
 /* 選中效果 */
 .activeBtn {
   background-color: #fafafa;
@@ -131,6 +134,7 @@ label {
 .iconBox {
   margin-right: 10px;
 }
+
 .iconCss {
   cursor: pointer;
 
@@ -158,12 +162,15 @@ label {
     background: #fafafa;
   }
 }
+
 .btnBox {
   margin-left: 1000px;
 }
+
 .inputCss {
   width: 280px;
   height: 23px;
+  padding-left: 5px;
 }
 
 .input2Css {
@@ -171,7 +178,9 @@ label {
   height: 23px;
   margin-top: 5px;
   margin-bottom: 3px;
+  padding-left: 5px;
 }
+
 .ansCss {
   padding-left: 70px;
 }

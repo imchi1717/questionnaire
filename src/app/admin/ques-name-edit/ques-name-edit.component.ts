@@ -1,4 +1,4 @@
-import { ques, theme } from './../../@interface/ques-interface';
+import { multiOptions, questionVoList, quiz, singleOptions } from './../../@interface/ques-interface';
 import { QuesDataService } from './../../@services/ques-data.service';
 import { Router } from '@angular/router';
 import { Component, inject } from '@angular/core';
@@ -33,28 +33,28 @@ export class QuesNameEditComponent {
 
   constructor(
     private quesDataService: QuesDataService,
-    private router: Router
+    private router: Router,
   ) { }
 
-  theme: theme = {
-    id: '',
-    mainTitle: '',
-    subtitle: '',
-    sDate: '',
-    eDate: '',
-    theme: '',
-    describe: '',
+  quiz: quiz = {
+    id: 0,
+    title: '',
+    description: '',
+    startDate: '',
+    endDate: '',
+    publish: false,
   };
+
   isLinear = false;
   optionInput: string[] = ['', '']; // 固定選項
   extraOptions: string[] = []; // 額外選項
-  quesArray: ques[] = [];
+  questionVoList: questionVoList[] = [];
   quesType!: string;
-  quesTitle = '';
+  name = '';
   required = true;
   today!: string;
-  newQues!: ques;
-  editingIndex!: number | null;  // 正在編輯的題目索引
+  newQues!: questionVoList;
+  editingIndex: number | null = null;  // 正在編輯的題目索引
   currentStep = 0 // stepper預設第一步
   readonly dialog = inject(MatDialog);
 
@@ -66,30 +66,32 @@ export class QuesNameEditComponent {
     const day = ('0' + now.getDate()).slice(-2);
     this.today = `${year}-${month}-${day}`;
 
+    // 訂閱 Service 的題目列表
+    this.quesDataService._questionList$.subscribe((res) => {
+      this.questionVoList = res; // 每次更新都會刷新 questionVoList
+    })
+
     if (this.quesDataService.editBoolean) {
       // 返回編輯頁，保留資料
-      this.quesArray = this.quesDataService.quesArray;
-      this.theme = this.quesDataService.theme;
+      this.questionVoList = [...this.quesDataService.create.questionVoList];
+      this.quiz = { ...this.quesDataService.create.quiz };
     } else {
       // 從其他頁面進入，初始化空資料
-      this.quesArray = [];
-      this.theme = {
-        id: '',
-        mainTitle: '',
-        subtitle: '',
-        sDate: '',
-        eDate: '',
-        theme: '',
-        describe: '',
+      this.questionVoList = [];
+      this.quiz = {
+        id: 0,
+        title: '',
+        description: '',
+        startDate: '',
+        endDate: '',
+        publish: false,
       };
       // 同時重置 service 內資料
-      this.quesDataService.quesArray = [];
-      this.quesDataService.theme = this.theme;
+      this.quesDataService.updateQuestionList([]);
+      this.quesDataService.create.quiz = this.quiz
       this.quesDataService.editBoolean = true; // 開始編輯
     }
   }
-
-
 
   // 題目類型
   choose(res: string) {
@@ -108,28 +110,31 @@ export class QuesNameEditComponent {
 
   // 刪除題目icon
   deleteBtn(index: number) {
-    this.quesArray.splice(index, 1);
-    this.quesDataService.quesArray.splice(index, 1);
+    let updated = [...this.quesDataService.create.questionVoList];
+    updated.splice(index, 1);
+    this.quesDataService.updateQuestionList(updated);
   }
 
   // 編輯題目icon
   editBtn(index: number) {
     // 取得使用者要編輯的題目 index是題目陣列位置
-    let ques = this.quesArray[index];
+    let ques = this.questionVoList[index];
     // 將要編輯的欄位帶回表單
-    this.quesTitle = ques.quesTitle;
+    this.name = ques.name;
     this.quesType = ques.type;
     this.required = ques.required;
 
     // 題目選項的欄位帶回表單
     if (ques.type == "S") {
       // array.slice(startIndex, endIndex)
-      this.optionInput = ques.options.slice(0, 2); // 固定選項
-      this.extraOptions = ques.options.slice(2); // 額外選項
+      let opts = ques.optionsList.map(opt => opt.optionName);
+      this.optionInput = opts.slice(0, 2); // 固定選項
+      this.extraOptions = opts.slice(2).filter(opt => opt.trim()); // 額外選項
     } else if (ques.type == "M") {
       // 陣列倒數第1、2個元素 [選項[索引]].name
-      this.optionInput = [ques.options[ques.options.length - 2].name, ques.options[ques.options.length - 1].name];
-      this.extraOptions = ques.options.slice(0, ques.options.length - 2).map(opt => opt.name);
+      let opts = ques.optionsList.map(opt => opt.optionName);
+      this.optionInput = opts.slice(-2);
+      this.extraOptions = opts.slice(0, -2).filter(n => n.trim());
     } else {
       this.optionInput = ['', ''];
       this.extraOptions = [];
@@ -144,64 +149,76 @@ export class QuesNameEditComponent {
   // 新增題目按鈕
   addQuesBtn() {
     // 預防空白標題
-    if (!this.quesTitle.trim()) {
+    if (!this.name.trim()) {
       return;
     }
 
+    // 問題編號
+    let nextQuestionId = this.quesDataService.create.questionVoList.length + 1;
+    // 選項
+    let allOptions = [...this.optionInput, ...this.extraOptions]
+      .map(opt => opt.trim()).filter(opt => opt);
+
     // 單選題
     if (this.quesType == 'S') {
+      let optionsList: singleOptions[] = allOptions.map((opt, idx) => ({
+        code: idx + 1,
+        optionName: opt
+      }));
       this.newQues = {
-        quesId: (this.quesDataService.quesArray.length + 1).toString(),
-        required: this.required,
-        quesTitle: this.quesTitle,
+        questionId: nextQuestionId,
+        name: this.name,
+        optionsList: optionsList,
         type: "S",
-        options: [...this.optionInput, ...this.extraOptions].filter(opt => opt.trim()),
-        answer: '',
+        required: this.required,
+        radioAnswer: 0,
+        textAnswer: '',
       }
       // 複選題
     } else if (this.quesType == 'M') {
+      let optionsList: multiOptions[] = allOptions.map((opt, idx) => ({
+        code: idx + 1,
+        optionName: opt,
+        checkBoolean: false
+      }));
       this.newQues = {
-        quesId: (this.quesDataService.quesArray.length + 1).toString(),
-        required: this.required,
-        quesTitle: this.quesTitle,
+        questionId: nextQuestionId,
+        name: this.name,
         type: "M",
-        options: [
-          ...this.extraOptions.filter(opt => opt.trim()).map(opt => ({ name: opt, checkBoolean: false })),
-          { name: this.optionInput[0], checkBoolean: false },
-          { name: this.optionInput[1], checkBoolean: false }
-        ],
+        required: this.required,
+        optionsList: optionsList,
+        radioAnswer: 0,
+        textAnswer: '',
       }
       // 文字題
     } else if (this.quesType == 'T') {
       this.newQues = {
-        quesId: (this.quesDataService.quesArray.length + 1).toString(),
+        questionId: nextQuestionId,
         required: this.required,
-        quesTitle: this.quesTitle,
+        name: this.name,
         type: "T",
-        options: [],
-        answer: '',
+        optionsList: [],
+        radioAnswer: 0,
+        textAnswer: '',
       };
     } else {
       return;
     }
 
-    // 判斷是否是新題目還是舊題目
+    // 判斷新增或編輯
     if (this.editingIndex !== null) {
-      // 更新題目(編輯模式)
-      this.quesArray[this.editingIndex] = this.newQues;
-      this.quesDataService.quesArray[this.editingIndex] = this.newQues;
+      this.quesDataService.updateQuestion(this.editingIndex, this.newQues);
       this.editingIndex = null;
     } else {
-      // 新增題目
-      this.quesArray.push(this.newQues);
-      this.quesDataService.quesArray.push(this.newQues);
+      this.quesDataService.addQuestion(this.newQues);
     }
 
     // 清除輸入
-    this.quesTitle = '';
+    this.name = '';
     this.optionInput = ['', ''];
     this.extraOptions = [];
-    this.required = false;
+    this.required = true;
+    this.currentStep = 1;
   }
 
 
@@ -213,16 +230,16 @@ export class QuesNameEditComponent {
   // 預覽按鈕
   checkPage() {
     // 是否必填項目都有填寫
-    if (!this.theme.mainTitle || !this.theme.subtitle || !this.theme.sDate || !this.theme.eDate) {
+    if (!this.quiz.title || !this.quiz.description || !this.quiz.startDate || !this.quiz.endDate) {
       this.dialog.open(DialogRequiredComponent);
       return;
     }
-    if (this.quesArray.length == 0) {
+    if (this.questionVoList.length == 0) {
       this.dialog.open(DialogRequiredComponent,);
       return;
     }
-    this.quesDataService.quesArray = this.quesArray;
-    this.quesDataService.theme = this.theme;
+    this.quesDataService.create.questionVoList = this.questionVoList;
+    this.quesDataService.create.quiz = this.quiz;
     this.router.navigateByUrl('/checkEdit');
   }
 }

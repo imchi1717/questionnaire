@@ -1,3 +1,6 @@
+import { create, quiz } from './../../@interface/ques-interface';
+import { QuesDataService } from './../../@services/ques-data.service';
+import { HttpService } from './../../@http-services/http.service';
 import { Component, inject, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,17 +28,27 @@ import { DialogDeleteComponent } from '../../@dialog/dialog-delete/dialog-delete
   templateUrl: './list-edit.component.html',
   styleUrl: './list-edit.component.scss'
 })
+
+
+
 export class ListEditComponent {
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private httpService: HttpService,
+    private quesDataService: QuesDataService
+  ) { }
+
   selectData: string = "";
   inputData!: string;
   sDate!: string;
   eDate!: string;
+  create!: create;
+  quiz!: quiz;
   readonly dialog = inject(MatDialog);
 
-  displayedColumns: string[] = ['select', 'position', 'name', 'state', 'sDate', 'eDate', 'result', 'response'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['select', 'id', 'title', 'state', 'startDate', 'endDate', 'result', 'response'];
+  dataSource = new MatTableDataSource<PeriodicElement>([]);
   selection = new SelectionModel<PeriodicElement>(true, []);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -43,14 +56,97 @@ export class ListEditComponent {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
+  // 後端資料
+  ngOnInit(): void {
+    this.httpService.getApi('http://localhost:8080/quiz/list')
+      .subscribe((res: any) => {
+        console.log(res);
 
+        this.dataSource.data = res.quizList;
+        this.updateState();
+      });
+  }
+
+  // 依時間判斷狀態
+  updateState() {
+    let today = new Date();
+    for (let data of this.dataSource.data) {
+      let start = new Date(data.startDate);
+      let end = new Date(data.endDate);
+      if (today < start) {
+        data.state = "即將開始";
+        data.result = "修改";
+        data.response = "-";
+      } else if (today >= start && today <= end) {
+        data.state = "進行中";
+        data.result = "-";
+        data.response = "-";
+      } else {
+        data.state = "結束";
+        data.result = "統計圖";
+        data.response = "看回饋";
+      }
+    }
+  }
+
+  goToFeedback(element: any) {
+    if (element.state == '進行中') {
+      let quizId = element.id;
+      let url = `http://localhost:8080/quiz/question_list?quizId=${quizId}`;
+      this.httpService.getApi(url).subscribe((res: any) => {
+        if (res.code == 200) {
+          this.quesDataService.create = {
+            quiz: {
+              id: element.id,
+              title: element.title,
+              startDate: element.startDate,
+              endDate: element.endDate,
+              description: element.description,
+              publish: false
+            },
+            questionVoList: res.questionVoList
+          };
+          this.router.navigateByUrl('/innerPage');
+        }
+      });
+    } else if (element.state == '即將開始') {
+          let quizId = element.id;
+    let url = `http://localhost:8080/quiz/question_list?quizId=${quizId}`;
+    this.httpService.getApi(url).subscribe((res: any) => {
+      if (res.code === 200) {
+        // 將資料帶回 QuesNameEditComponent
+        this.quesDataService.create = {
+          quiz: {
+            id: element.id,
+            title: element.title,
+            startDate: element.startDate,
+            endDate: element.endDate,
+            description: element.description,
+            publish: false
+          },
+          questionVoList: res.questionVoList
+        };
+        this.quesDataService.editBoolean = true; // 設定為編輯模式
+        this.router.navigateByUrl('/quesNameEdit'); // 跳轉到問卷編輯頁
+      }
+    });
+    } else {
+      this.router.navigateByUrl('/chart');
+    }
+  }
+
+  goToPage(element: any) {
+    if (element.state === '結束') {
+      this.router.navigateByUrl('/feedback');
+    }
+  }
 
   // 即時搜尋
   searchInput() {
     // 開一個空陣列儲存篩選的資料
     let tidyData: PeriodicElement[] = [];
-    for (let data of ELEMENT_DATA) {
-      if (data.name.indexOf(this.inputData) != -1) {  // 有符合
+    for (let data of this.dataSource.data) {
+      if (data.title.indexOf(this.inputData) != -1) {  // 有符合
         tidyData.push(data);
       }
     }
@@ -75,11 +171,11 @@ export class ListEditComponent {
 
   // 時間篩選
   changeSDate() {
-    this.dataSource.data = ELEMENT_DATA.filter(item => item.sDate >= this.sDate);
+    this.dataSource.data = this.dataSource.data.filter(item => item.startDate >= this.sDate);
   }
 
   changeEDate() {
-    this.dataSource.data = ELEMENT_DATA.filter(item => item.eDate >= this.eDate);
+    this.dataSource.data = this.dataSource.data.filter(item => item.endDate >= this.eDate);
   }
 
 
@@ -91,9 +187,6 @@ export class ListEditComponent {
     if (select.length == 0) {
       return;
     }
-    // 保留表格中沒有勾選的項目
-    this.dataSource.data = this.dataSource.data.filter(item => !select.includes(item));
-    this.selection.clear;
 
     const dialogRef = this.dialog.open(DialogDeleteComponent, {
       width: '300px',
@@ -102,11 +195,16 @@ export class ListEditComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == 'confirm') {
-        // 使用者按下「確認」
-        this.dataSource.data = this.dataSource.data.filter(item => !select.includes(item));
-        this.selection.clear();
+        let delSelect = { quizIdList: this.selection.selected.map(item => item.id) }
+        this.httpService.postApi('http://localhost:8080/quiz/delete', delSelect)
+          .subscribe((res: any) => {
+            // 後端刪除成功 → 從 dataSource 移除
+            this.dataSource.data = this.dataSource.data.filter(item => !select.includes(item));
+            this.selection.clear();
+          });
       }
     });
+
 
   }
 
@@ -116,27 +214,15 @@ export class ListEditComponent {
   }
 }
 
-
 export interface PeriodicElement {
-  name: string;
-  position: number;
+  title: string;
+  id: number;
   state: string;
-  sDate: string;
-  eDate: string;
+  startDate: string;
+  endDate: string;
   result: string;
   response: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: '吃飯喜好', state: '進行中', sDate: '2025-10-09', eDate: '2025-12-09', result: '前往', response: '尚未結束' },
-  { position: 2, name: 'Helium', state: '即將開始', sDate: '2025-11-09', eDate: '2025-11-29', result: '尚未開始', response: '尚未開始' },
-  { position: 3, name: 'Lithium', state: '進行中', sDate: '2025-08-09', eDate: '2025-08-12', result: '前往', response: '尚未結束' },
-  { position: 4, name: 'Beryllium', state: '結束', sDate: '2025-10-09', eDate: '2025-12-09', result: '統計圖', response: '看回饋' },
-  { position: 5, name: 'Boron', state: '結束', sDate: '2025-09-09', eDate: '2026-03-09', result: '統計圖', response: '看回饋' },
-  { position: 6, name: 'Carbon', state: '即將開始', sDate: '2025-12-28', eDate: '2026-05-09', result: '尚未開始', response: '尚未開始' },
-  { position: 7, name: 'Nitrogen', state: '進行中', sDate: '2025-05-09', eDate: '2025-06-09', result: '前往', response: '尚未結束' },
-  { position: 8, name: 'Oxygen', state: '即將開始', sDate: '2025-10-19', eDate: '2025-11-09', result: '尚未開始', response: '尚未開始' },
-  { position: 9, name: 'Fluorine', state: '即將開始', sDate: '2025-05-09', eDate: '2025-12-09', result: '尚未開始', response: '尚未開始' },
-];
 
 

@@ -1,19 +1,19 @@
 <!-- 主題設計 -->
 <div class="container">
-  <img class="bigImage" src="/banner5.png">
-  <div class="mainTitleCss">{{ theme.mainTitle }}</div>
-  <div class="subtitleCss">{{ theme.subtitle }}</div>
+  <img class="bigImage" src="/banner6.png">
+  <div class="pointCss">{{ theme.point }}</div>
+  <div class="pointDesCss">{{ theme.pointDescription }} </div>
 </div>
 
 <div class="dateCss">
-  <span>問卷時間 : {{ theme.sDate }}</span> ~ <span>{{ theme.eDate }}</span>
+  <span>問卷時間 : {{ quiz.startDate }}</span> ~ <span>{{ quiz.endDate }}</span>
 </div>
 
 <div class="background">
-  <div class="themeCss">
-    <h3>{{ theme.theme }}</h3>
+  <div class="quizCss">
+    <h3>{{ quiz.title }}</h3>
     <div>
-      {{ theme.describe }}
+      {{ quiz.description }}
     </div>
   </div>
 
@@ -39,30 +39,34 @@
 
     <!-- 單選題 -->
     @for (ques of singleQues; track $index) {
-      <div class="btnEditBox">{{ ques.quesId }}. {{ ques.quesTitle }}</div>
-      <div class="ansCss">
-        {{ ques.answer }}
-      </div>
+      <div class="btnEditBox">{{ ques.questionId }}. {{ ques.name }}</div>
+      @for (option of ques.optionsList; track $index) {
+        @if (ques.radioAnswer == option.code) {
+          <div class="ansCss">
+            {{ option.optionName }}
+          </div>
+        }
+      }
     }
 
     <!-- 複選題 -->
     @for (ques of multiQuesArray; track $index) {
-      <div class="btnEditBox">{{ ques.quesId }}. {{ ques.quesTitle }}</div>
-      @for (option of ques.options; track $index) {
+      <div class="btnEditBox">{{ ques.questionId }}. {{ ques.name }}</div>
+      @for (option of ques.optionsList; track $index) {
         @if (option.checkBoolean == true) {
-        <div class="ansCss">
-          {{ option.name }}
-        </div>
+          <div class="ansCss">
+            {{ option.optionName }}
+          </div>
         }
       }
     }
 
     <!-- 文字題 -->
     @for (ques of textQues; track $index) {
-      <div class="btnEditBox">{{ ques.quesId }}. {{ ques.quesTitle }}</div>
-      <div class="ansCss">
-        {{ques.answer }}
-      </div>
+    <div class="btnEditBox">{{ ques.questionId }}. {{ ques.name }}</div>
+    <div class="ansCss">
+      {{ ques.textAnswer }}
+    </div>
     }
   </div>
 

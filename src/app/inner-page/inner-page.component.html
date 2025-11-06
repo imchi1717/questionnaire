@@ -1,19 +1,19 @@
 <!-- 主題設計 -->
 <div class="container">
-  <img class="bigImage" src="/banner5.png">
-  <div class="mainTitleCss">{{ theme.mainTitle }}</div>
-  <div class="subtitleCss">{{ theme.subtitle }} </div>
+  <img class="bigImage" src="/banner6.png">
+  <div class="pointCss">{{ theme.point }}</div>
+  <div class="pointDesCss">{{ theme.pointDescription }} </div>
 </div>
 
 <div class="dateCss">
-  <span>問卷時間 : {{ theme.sDate }}</span> ~ <span>{{ theme.eDate }}</span>
+  <span>問卷時間 : {{ quiz.startDate }}</span> ~ <span>{{ quiz.endDate }}</span>
 </div>
 
 <div class="background">
-  <div class="themeCss">
-    <h3>{{ theme.theme }}</h3>
+  <div class="quizCss">
+    <h3>{{ quiz.title }}</h3>
     <div>
-      {{ theme.describe }}
+      {{ quiz.description }}
     </div>
   </div>
 
@@ -40,30 +40,31 @@
 
     <!-- 單選題 -->
     @for (ques of singleQues; track $index) {
-      <div class="btnEditBox">{{ ques.quesId }}. {{ ques.quesTitle }}</div>
-      @for (option of ques.options; track $index) {
-      <div class="ansCss">
-        <input type="radio" name="{{ ques.quesId }}" [value]="option" [(ngModel)]="ques.answer"> {{ option }}
-      </div>
-      }
+    <div class="btnEditBox">{{ ques.questionId }}. {{ ques.name }}</div>
+    @for (option of ques.optionsList; track $index) {
+    <div class="ansCss">
+      <input type="radio" name="{{ ques.questionId }}" [value]="option.code" [(ngModel)]="ques.radioAnswer"> {{
+      option.optionName }}
+    </div>
+    }
     }
 
     <!-- 複選題 -->
     @for (ques of multiQuesArray; track $index) {
-      <div class="btnEditBox">{{ ques.quesId }}. {{ ques.quesTitle }}</div>
-      @for (option of ques.options; track $index) {
-      <div class="ansCss">
-        <input type="checkbox" [(ngModel)]="option.checkBoolean"> {{ option.name }}
-      </div>
-      }
+    <div class="btnEditBox">{{ ques.questionId }}. {{ ques.name }}</div>
+    @for (option of ques.optionsList; track $index) {
+    <div class="ansCss">
+      <input type="checkbox" [(ngModel)]="option.checkBoolean"> {{ option.optionName }}
+    </div>
+    }
     }
 
     <!-- 文字題 -->
     @for (ques of textQues; track $index) {
-      <div class="btnEditBox">{{ ques.quesId }}. {{ ques.quesTitle }}</div>
-      <div class="ansCss">
-      <textarea [(ngModel)]="ques.answer" placeholder="請輸入答案"></textarea>
-      </div>
+    <div class="btnEditBox">{{ ques.questionId }}. {{ ques.name }}</div>
+    <div class="ansCss">
+      <textarea [(ngModel)]="ques.textAnswer" placeholder="請輸入答案"></textarea>
+    </div>
     }
   </div>
 </div>
@@ -71,8 +72,12 @@
 
 <!-- 按鈕 -->
 <div class="allBtnCss">
-  <button class="btn1Css" (click)="cancel()">取消</button>
-  <button class="btn1Css" (click)="check()">預覽</button>
+  @if (isAdmin) {
+    <button class="btn1Css" (click)="backPage()">上一頁</button>
+  } @else {
+    <button class="btn1Css" (click)="cancel()">取消</button>
+    <button class="btn1Css" (click)="check()">預覽</button>
+  }
+
+
 </div>
-
-

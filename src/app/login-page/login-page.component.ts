@@ -8,6 +8,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogSignInComponent } from '../@dialog/dialog-sign-in/dialog-sign-in.component';
 import { DialogRequiredComponent } from '../@dialog/dialog-required/dialog-required.component';
 import { CommonModule } from '@angular/common';
+import { HttpService } from '../@http-services/http.service';
+import { DialogFailComponent } from '../@dialog/dialog-fail/dialog-fail.component';
 
 @Component({
   selector: 'app-login-page',
@@ -40,7 +42,8 @@ export class LoginPageComponent {
 
   constructor(
     private router: Router,
-    private quesDataService: QuesDataService,) { }
+    private quesDataService: QuesDataService,
+    private httpService: HttpService) { }
 
   // 密碼眼睛
   eyeBtn() {
@@ -59,21 +62,33 @@ export class LoginPageComponent {
       this.dialog.open(DialogRequiredComponent);
       return;
     }
-    this.router.navigateByUrl('/list');
 
-    // 確認管理者或使用者
-    if (this.userAccount.account == 'imchi' && this.userAccount.password == '5417') {
-      this.quesDataService.show();
-    } else {
-      this.quesDataService.hide();
-    }
-    this.quesDataService._admin$.subscribe((res) => {
-      if (res) {
-        this.router.navigateByUrl('listEdit');
-      } else {
-        this.router.navigateByUrl('list');
-      }
-    })
+    // 後端驗證帳號密碼
+    this.httpService.postApi('http://localhost:8080/quiz/accountLogin', this.userAccount)
+      .subscribe((res: any) => {
+        console.log('後端回傳:', res);
+        if (res.code == 200) {
+          this.quesDataService.userData = {
+            name: res.name,
+            phone: res.phone,
+            email: res.email,
+            age: res.age
+          }
+          if (res.admin == true) {
+            // 管理者
+            this.quesDataService.show();
+            this.router.navigateByUrl('listEdit');
+          } else {
+            // 使用者
+            this.quesDataService.hide();
+            this.router.navigateByUrl('list');
+          }
+
+        } else {
+          // 登入失敗，跳出 Dialog
+          this.dialog.open(DialogFailComponent);
+        }
+      });
   }
 
   // 註冊按鈕
@@ -86,7 +101,4 @@ export class LoginPageComponent {
     }
     this.dialog.open(DialogSignInComponent);
   }
-
-
-
 }

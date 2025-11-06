@@ -1,14 +1,3 @@
-// 主題資料
-export interface theme {
-  id: string,
-  mainTitle: string,
-  subtitle: string,
-  sDate: string,
-  eDate: string,
-  theme: string,
-  describe: string,
-}
-
 // 個人檔案資料
 export interface userData {
   name: string,
@@ -23,40 +12,79 @@ export interface userAccount {
   password: string,
 }
 
+export interface theme {
+  point: string,
+  pointDescription: string,
+}
+
+// 問卷資料
+export interface create {
+  quiz: quiz,
+  questionVoList: questionVoList[],
+}
+
+export interface quiz {
+  id: number,
+  title: string,
+  description: string,
+  startDate: string,
+  endDate: string,
+  publish: boolean,
+}
+
+
+
 // 題目基本架構
 export interface basicQues {
-  quesId: string,
-  required: boolean,
-  quesTitle: string,
+  questionId: number,
+  name: string,
   type: 'S' | 'M' | 'T',
+  required: boolean,
 }
 
 export interface survey {
-  quesArray: ques[];
+  create: create;
 }
 
 // 單選題 (S)
 export interface singleQues extends basicQues {
   type: 'S',
-  options: string [],
-  answer: string,
+  optionsList: singleOptions[],
+  radioAnswer?: number,
+  textAnswer?: String,
+}
+
+export interface singleOptions {
+  code: number,
+  optionName: string,
 }
 
 // 複選題 (M)
 export interface multiQues extends basicQues {
   type: 'M',
-  options: multiOptions [],
+  optionsList: multiOptions[],
+  radioAnswer?: number,
+  textAnswer?: String,
 }
 
 export interface multiOptions {
-  name: string,
+  code: number,
+  optionName: string,
   checkBoolean: boolean,
 }
 
 // 文字題 (T)
 export interface textQues extends basicQues {
   type: 'T',
-  options: string [],
-  answer: string,
+  optionsList: string[],
+  radioAnswer?: number,
+  textAnswer?: String,
 }
-export type ques = singleQues | multiQues | textQues;
+export type questionVoList = singleQues | multiQues | textQues;
+
+export interface answerList {
+  questionId: number,
+  optionsList: multiOptions[],
+  radioAnswer: number,
+  textAnswer: String,
+}

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { QuesDataService } from '../../@services/ques-data.service';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { userData, theme, ques, singleQues, multiQues, textQues } from '../../@interface/ques-interface';
+import { userData, quiz, questionVoList, singleQues, multiQues, textQues, theme } from '../../@interface/ques-interface';
 
 
 @Component({
@@ -14,12 +14,13 @@ import { userData, theme, ques, singleQues, multiQues, textQues } from '../../@i
 })
 export class UserDetailsComponent {
   userData!: userData;
-  theme!: theme;
-  quesArray: ques[] = [];
+  quiz!: quiz;
+  questionVoList: questionVoList[] = [];
   singleQues: singleQues[] = [];
   multiQuesArray: multiQues[] = [];
   textQues: textQues[] = [];
-  answer!: ques[];
+  answer!: questionVoList[];
+  theme!: theme;
   readonly dialog = inject(MatDialog);
 
 
@@ -31,11 +32,12 @@ export class UserDetailsComponent {
   ngOnInit(): void {
     // 從service抓資訊於此頁面
     this.theme = this.quesDataService.theme;
+    this.quiz = this.quesDataService.create.quiz;
     this.userData = this.quesDataService.userData;
-    this.quesArray = this.quesDataService.quesArray;
-    this.singleQues = this.quesArray.filter(item => item.type == 'S') as singleQues[];
-    this.multiQuesArray = this.quesArray.filter(item => item.type == 'M') as multiQues[];
-    this.textQues = this.quesArray.filter(item => item.type == 'T') as textQues[];
+    this.questionVoList = this.quesDataService.create.questionVoList;
+    this.singleQues = this.questionVoList.filter(item => item.type == 'S') as singleQues[];
+    this.multiQuesArray = this.questionVoList.filter(item => item.type == 'M') as multiQues[];
+    this.textQues = this.questionVoList.filter(item => item.type == 'T') as textQues[];
   }
 
   // 按鈕

@@ -1,3 +1,4 @@
+import { QuesDataService } from './../../@services/ques-data.service';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,9 +18,13 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class HeaderComponent {
 
-  constructor( private router: Router){}
+  constructor(
+    private router: Router,
+    private quesDataService: QuesDataService,
+  ){}
 
   isLogin: boolean = true;
+  isAdmin!: boolean;
 
   ngOnInit(): void {
     // this.router.events.subscribe是router套件去偵測url變化
@@ -29,6 +34,9 @@ export class HeaderComponent {
       if (res instanceof NavigationEnd) {
         this.isLogin = (res.url == '/list' || res.url == '/listEdit' );
       }
+    });
+    this.quesDataService._admin$.subscribe((res) => {
+      this.isAdmin = res;
     });
   }
 

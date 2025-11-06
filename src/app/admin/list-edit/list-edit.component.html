@@ -74,22 +74,22 @@
           </ng-container>
 
           <!-- 編號 -->
-          <ng-container matColumnDef="position">
+          <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef> 編號</th>
-            <td mat-cell *matCellDef="let element"> {{element.position}}</td>
+            <td mat-cell *matCellDef="let element"> {{element.id}}</td>
           </ng-container>
 
           <!-- 名稱 -->
-          <ng-container matColumnDef="name">
+          <ng-container matColumnDef="title">
             <th mat-header-cell *matHeaderCellDef> 名稱 </th>
             <td mat-cell *matCellDef="let element">
               @if (element.state == '進行中') {
-              <p [routerLink]="['/innerPage']" class="routerCss">
-                {{element.name}}
+              <p (click)="goToFeedback(element)" class="routerCss">
+                {{element.title}}
               </p>
               }
               @else {
-              {{element.name}}
+              {{element.title}}
               }
             </td>
           </ng-container>
@@ -101,15 +101,15 @@
           </ng-container>
 
           <!-- 開始時間 -->
-          <ng-container matColumnDef="sDate">
+          <ng-container matColumnDef="startDate">
             <th mat-header-cell *matHeaderCellDef> 開始時間 </th>
-            <td mat-cell *matCellDef="let element"> {{element.sDate}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.startDate}} </td>
           </ng-container>
 
           <!-- 結束時間 -->
-          <ng-container matColumnDef="eDate">
+          <ng-container matColumnDef="endDate">
             <th mat-header-cell *matHeaderCellDef> 結束時間 </th>
-            <td mat-cell *matCellDef="let element"> {{element.eDate}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.endDate}} </td>
           </ng-container>
 
           <!-- 統計結果 -->
@@ -117,16 +117,16 @@
             <th mat-header-cell *matHeaderCellDef> 結果 </th>
             <td mat-cell *matCellDef="let element">
               @if (element.state == '進行中') {
-              <p [routerLink]="['/innerPage']" class="resultCss">
-                {{element.result}}
-              </p>
+              {{element.result}}
               }
               @else if (element.state == '結束') {
-              <p [routerLink]="['/chart']" class="resultCss">
+              <p (click)="goToFeedback(element)" class="resultCss">
                 {{element.result}}
               </p>
-              } @else {
-              {{element.result}}
+              } @else if (element.state == '即將開始') {
+              <p (click)="goToFeedback(element)" class="resultCss">
+                {{element.result}}
+              </p>
               }
             </td>
           </ng-container>
@@ -136,7 +136,7 @@
             <th mat-header-cell *matHeaderCellDef> 回饋 </th>
             <td mat-cell *matCellDef="let element">
               @if (element.state == '結束') {
-              <p [routerLink]="['/feedback']" class="resultCss">
+              <p (click)="goToPage(element)" class="resultCss">
                 {{element.response}}
               </p>
               } @else {

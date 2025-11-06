@@ -10,10 +10,13 @@
       <button class="btnChoose">問卷列表</button>
       <button class="btnCss" (click)="openUser()">個人資料</button>
       <button class="btnCss" (click)="logOut()">登出</button>
+      @if (isAdmin == false) {
       <div class="iconCss">
-        <mat-icon aria-hidden="false" aria-label="Example manage_accounts icon"
-          fontIcon="manage_accounts" (click)="adminLog()"></mat-icon>
+        <mat-icon aria-hidden="false" aria-label="Example manage_accounts icon" fontIcon="manage_accounts"
+          (click)="adminLog()"></mat-icon>
       </div>
+      }
+
     </div>
     }
   </div>

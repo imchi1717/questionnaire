@@ -10,19 +10,19 @@
           <div class="themeCss">
             <div class="insCss">
               <div class="rqCss">*</div><label>問卷名稱 :</label>
-              <input [(ngModel)]="theme.mainTitle" class="inputCss">
+              <input [(ngModel)]="quiz.title" class="inputCss">
             </div>
             <div class="insCss">
               <div class="rqCss">*</div><label>問卷說明 :</label>
-              <textarea [(ngModel)]="theme.subtitle" class="inputCss"></textarea>
+              <textarea [(ngModel)]="quiz.description" class="inputCss"></textarea>
             </div>
             <div class="insCss">
               <div class="rqCss">*</div><label>開始時間 :</label>
-              <input type="date" [(ngModel)]="theme.sDate" [min]="today" style="width: 280px; height: 23px;">
+              <input type="date" [(ngModel)]="quiz.startDate" [min]="today" style="width: 280px; height: 23px; padding-left: 5px;">
             </div>
             <div class="insCss">
               <div class="rqCss">*</div><label>結束時間 :</label>
-              <input type="date" [(ngModel)]="theme.eDate" min="{{ theme.sDate }}" style="width: 280px; height: 23px;">
+              <input type="date" [(ngModel)]="quiz.endDate" min="{{ quiz.startDate }}" style="width: 280px; height: 23px; padding-left: 5px;">
             </div>
             <div>
               <button class="btnCss" matStepperNext>下一步 </button>
@@ -44,7 +44,7 @@
           <!-- 單選 / 複選 -->
           <div class="insCss">
             <div class="rqCss">*</div> <label>問題名稱 :</label>
-            <input [(ngModel)]="quesTitle" class="inputCss">
+            <input [(ngModel)]="name" class="inputCss">
           </div>
 
           <!-- 固定的兩個輸入框 -->
@@ -79,7 +79,7 @@
           <!-- 文字 -->
           <div class="insCss">
             <div class="rqCss">*</div><label>問題名稱 :</label>
-            <input [(ngModel)]="quesTitle" class="inputCss">
+            <input [(ngModel)]="name" class="inputCss">
           </div>
           <div class="insCss">
             <div class="rqCss">*</div><label>選項 :</label>
@@ -107,15 +107,15 @@
     <!-- 即時預覽 -->
     <div class="previewBox">
       <h4><mark>問卷主題</mark></h4>
-      <div class="preCss">問卷名稱 : {{ theme.mainTitle }}</div>
-      <div class="preCss">問卷說明 : {{ theme.subtitle }}</div>
-      <div class="preCss">開始時間 : {{ theme.sDate }}</div>
-      <div class="preCss">結束時間 : {{ theme.eDate }}</div>
+      <div class="preCss">問卷名稱 : {{ quiz.title }}</div>
+      <div class="preCss">問卷說明 : {{ quiz.description }}</div>
+      <div class="preCss">開始時間 : {{ quiz.startDate }}</div>
+      <div class="preCss">結束時間 : {{ quiz.endDate }}</div>
 
       <hr class="divider">
 
       <h4><mark>主要問題</mark></h4>
-      @for (quesData of quesArray; track $index) {
+      @for (quesData of questionVoList; track $index) {
 
         <div class="btnEditBox">
           <div class="iconBox">
@@ -127,23 +127,23 @@
           @if (quesData.required == true) {
             <div class="rqCss">*</div>
           }
-          {{ $index + 1 }}. {{ quesData.quesTitle }}
+          {{ $index + 1 }}. {{ quesData.name }}
         </div>
 
         <div class="ansCss">
           <!-- 單選 -->
           @if (quesData.type == 'S') {
-            @for (opt of quesData.options; track $index) {
+            @for (opt of quesData.optionsList; track $index) {
             <div>
-              <input type="radio" name="{{ quesData.quesId }}" [(ngModel)]="quesData.answer" [value]="opt">{{ opt }}
+              <input type="radio" name="{{ quesData.questionId }}" [(ngModel)]="quesData.radioAnswer" [value]="opt.code">{{ opt.optionName }}
             </div>
             }
           }
 
           <!-- 複選 -->
           @if (quesData.type == 'M') {
-            @for (opt of quesData.options; track $index) {
-            <div><input type="checkbox">{{ opt.name }}</div>
+            @for (opt of quesData.optionsList; track $index) {
+            <div><input type="checkbox">{{ opt.optionName }}</div>
             }
           }
 

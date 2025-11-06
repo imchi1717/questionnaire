@@ -2,7 +2,7 @@ import { QuesDataService } from './../@services/ques-data.service';
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import Chart from 'chart.js/auto';
-import { theme } from '../@interface/ques-interface';
+import { quiz } from '../@interface/ques-interface';
 
 @Component({
   selector: 'app-chart',
@@ -12,55 +12,69 @@ import { theme } from '../@interface/ques-interface';
 })
 export class ChartComponent {
 
-  theme!: theme;
-  quesArray = [
+  quiz!: quiz;
+  questionVoList = [
     {
-      quesId: '1',
-      quesTitle: '喜歡慢慢享受還是速速吃飯?',
+      questionId: 1,
+      name: '喜歡慢慢享受還是速速吃飯?',
+      optionsList: [
+        { code: 1, optionName: '慢慢享受(純粹吃飯很慢)' },
+        { code: 2, optionName: '速速用吞的' },
+        { code: 3, optionName: '都可' }
+      ],
       type: 'S',
-      options: ['慢慢享受(純粹吃飯很慢)', '速速用吞的'],
+      required: false,
       answer: ''
     },
     {
-      quesId: '2',
-      quesTitle: '鍋燒類的主餐選哪個?',
-      type: 'M',
-      options: [
-        { name:'意麵', checkBoolean: false },
-        { name:'雞絲麵', checkBoolean: false },
-        { name:'烏龍麵', checkBoolean: false },
-        { name:'飯', checkBoolean: false },
-        { name:'都加', checkBoolean: false }
+      questionId: 2,
+      name: '鍋燒類的主餐選哪個?',
+      optionsList: [
+        { code: 1, optionName: '意麵', checkBoolean: false },
+        { code: 2, optionName: '雞絲麵', checkBoolean: false },
+        { code: 3, optionName: '烏龍麵', checkBoolean: false },
+        { code: 4, optionName: '飯', checkBoolean: false },
+        { code: 5, optionName: '都加', checkBoolean: false }
       ],
+      type: 'M',
+      required: false,
     },
     {
-      quesId: '3',
-      quesTitle: '其他想吃的?',
+      questionId: 3,
+      name: '其他想吃的?',
       type: 'T',
-      options: [],
+      optionsList: [],
+      required: false,
       answer: ''
     }
   ]
 
-  constructor (
+  constructor(
     private quesDataService: QuesDataService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.theme = this.quesDataService.theme
+    this.quiz = this.quesDataService.create.quiz;
   }
 
 
   backPage() {
-    this.router.navigateByUrl('/list');
+    // 訂閱判斷 admin 狀態
+    this.quesDataService._admin$.subscribe(isAdmin => {
+      if (isAdmin) {
+        this.router.navigateByUrl('/listEdit');
+      } else {
+        this.router.navigateByUrl('/list');
+      }
+    }).unsubscribe(); // 用完立即取消訂閱，避免記憶體洩漏
   }
 
 
   ngAfterViewInit(): void {
-    for(let chartData of this.quesArray) {
+    for (let chartData of this.questionVoList) {
       // 獲取 canvas 元素
-      let ctx = document.getElementById(chartData.quesId) as HTMLCanvasElement;
+      let ctx = document.getElementById(chartData.questionId.toLocaleString.toString()) as HTMLCanvasElement;
 
       // 設定數據
       let data = {

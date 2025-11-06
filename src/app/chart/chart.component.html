@@ -1,20 +1,20 @@
 <div class="dateCss">
-  <span>問卷時間 : {{ theme.sDate }}</span> ~ <span>{{ theme.eDate }}</span>
+  <span>問卷時間 : {{ quiz.startDate }}</span> ~ <span>{{ quiz.endDate }}</span>
 </div>
 
 <div class="themeCss">
-  <h3>{{ theme.mainTitle }}</h3>
+  <h3>{{ quiz.title }}</h3>
   <div>
-    {{ theme.subtitle }}
+    {{ quiz.description }}
   </div>
 </div>
 
 
-@for (chartData of quesArray; track $index) {
+@for (chartData of questionVoList; track $index) {
 <div class="chartBox">
-  <div class="chartCss"><canvas id="{{ chartData.quesId }}"></canvas></div>
+  <div class="chartCss"><canvas id="{{ chartData.questionId }}"></canvas></div>
   <div>
-    <div class="chartIdCss">{{ chartData.quesId }}. {{ chartData.quesTitle }}</div>
+    <div class="chartIdCss">{{ chartData.questionId }}. {{ chartData.name }}</div>
     <div class="contentCss">慢慢享受: 30</div>
     <div class="contentCss">速速吃完: 50</div>
   </div>
