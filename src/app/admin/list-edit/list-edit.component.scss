@@ -25,16 +25,16 @@ table {
 }
 .searchInputCss{
   width: 160px;
-  height: 23px;
-  margin-right: 20px;
+  height: 28px;
+  margin-right: 35px;
   padding-left: 12px;
   border-radius: 10px;
   border: 2px solid #971D10;
 }
 .searchInput2Css {
-  width: 160px;
-  height: 19px;
-  margin-right: 20px;
+  width: 230px;
+  height: 26px;
+  margin-right: 28px;
   padding-left: 12px;
   border-radius: 10px;
   border: 2px solid #971D10;
@@ -49,15 +49,16 @@ tr, th, td {
 }
 
 .cssA{
-  color: black;
+  color: black !important;
 }
 .cssB{
-  color:#6c757d;
+  color: #6c757d;
 }
 .cssC{
   color: black;
 }
 .routerCss{
+  color: black;
   text-decoration: underline;
   cursor:pointer;
 
@@ -99,6 +100,7 @@ tr, th, td {
   white-space: nowrap;
   font-size: 12px;
 }
+
 .deleteCss{
   cursor:pointer;
 
@@ -106,10 +108,31 @@ tr, th, td {
     color: #971D10;
     }
 }
+
 .addCss{
   cursor:pointer;
 
     &:hover {
     color: #971D10;
     }
+}
+
+.btn1Css{
+  height: 30px;
+  width: 65px;
+  border-radius: 10px;
+  background: #fafafa;
+  border: 2px solid #971D10;
+  color: #971D10;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-right: 10px;
+  cursor:pointer;
+
+  &:hover {
+    color: #fafafa;
+    background: #971D10;
+  }
 }

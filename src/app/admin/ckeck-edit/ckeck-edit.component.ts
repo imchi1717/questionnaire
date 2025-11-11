@@ -39,31 +39,38 @@ export class CkeckEditComponent {
   }
 
   save() {
-    this.httpService.postApi('http://localhost:8080/quiz/create', this.create)
-      .subscribe((res: any) => {
-        this.create = this.quesDataService.create;
-        this.router.navigateByUrl('/listEdit');
-      });
+    this.create.quiz.publish = false;
+    // 判斷是新增還是更新
+    if (this.quesDataService.create.quiz.id) {
+      this.httpService.postApi('http://localhost:8080/quiz/update', this.create)
+        .subscribe((res: any) => {
+          this.create = this.quesDataService.create;
+        });
+    } else {
+      this.httpService.postApi('http://localhost:8080/quiz/create', this.create)
+        .subscribe((res: any) => {
+          this.create = this.quesDataService.create;
+        });
+    }
+    this.router.navigateByUrl('/listEdit');
 
   }
 
   publish() {
+    this.create.quiz.publish = true;
     if (this.quesDataService.create.quiz.id) {
-      console.log(this.quesDataService.create.quiz.id);
-
       // 已存在問卷 → 更新
       this.httpService.postApi('http://localhost:8080/quiz/update', this.create)
         .subscribe((res: any) => {
           this.create = this.quesDataService.create;
-          this.router.navigateByUrl('/listEdit');
         });
 
     } else {
       this.httpService.postApi('http://localhost:8080/quiz/create', this.create)
         .subscribe((res: any) => {
           this.create = this.quesDataService.create;
-          this.router.navigateByUrl('/listEdit');
         });
     }
+    this.router.navigateByUrl('/listEdit');
   }
 }

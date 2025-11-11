@@ -82,9 +82,3 @@ export interface textQues extends basicQues {
 }
 export type questionVoList = singleQues | multiQues | textQues;
 
-export interface answerList {
-  questionId: number,
-  optionsList: multiOptions[],
-  radioAnswer: number,
-  textAnswer: String,
-}

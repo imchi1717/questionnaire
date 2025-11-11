@@ -15,18 +15,20 @@
   <!-- 搜尋區塊 -->
   <div class="searchCss">
     <span class="searchItem">問卷名稱</span>
-    <input class="searchInput2Css" [(ngModel)]="inputData" (keyup)="searchInput()">
-    <span class="searchItem">狀態</span>
+    <input class="searchInput2Css" [(ngModel)]="inputData">
+    <!-- <span class="searchItem">狀態</span>
     <select class="searchInputCss" [(ngModel)]="selectData" (change)="changeState()">
       <option value="">--Please choose--</option>
       <option value="ing">進行中</option>
       <option value="start">即將開始</option>
       <option value="end">結束</option>
-    </select>
+    </select> -->
     <span class="searchItem">開始時間</span>
-    <input class="searchInputCss" type="date" [(ngModel)]="sDate" (change)="changeSDate()">
+    <input class="searchInputCss" type="date" [(ngModel)]="sDate">
     <span class="searchItem">結束時間</span>
-    <input class="searchInputCss" type="date" [(ngModel)]="eDate" min="{{ sDate }}" (change)="changeEDate()">
+    <input class="searchInputCss" type="date" [(ngModel)]="eDate" min="{{ sDate }}">
+    <button class="btn1Css" (click)="searchBtn()">搜尋</button>
+    <button class="btn1Css" (click)="clearBtn()">清除</button>
   </div>
 
   <!-- 表格區塊 -->
@@ -78,7 +80,7 @@
         <th mat-header-cell *matHeaderCellDef> 結果 </th>
         <td mat-cell *matCellDef="let element">
           @if (element.state == '進行中') {
-            {{element.result}}
+          {{element.result}}
           }
           @else if (element.state == '結束') {
           <p (click)="goToFeedback(element)" class="resultCss">

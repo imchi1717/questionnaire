@@ -1,8 +1,8 @@
 <!-- 主題設計 -->
 <div class="container">
   <img class="bigImage" src="/banner6.png">
-  <div class="mainTitleCss">{{ quiz.title }}</div>
-  <div class="subtitleCss">{{ quiz.description }}</div>
+  <div class="pointCss">{{ theme.point }}</div>
+  <div class="pointDesCss">{{ theme.pointDescription }} </div>
 </div>
 
 <div class="dateCss">
@@ -10,20 +10,19 @@
 </div>
 
 <div class="background">
-  <div class="themeCss">
-    <h3>{{ theme.point }}</h3>
+  <div class="quizCss">
+    <h3>{{ quiz.title }}</h3>
     <div>
-      {{ theme.pointDescription }}
+      {{ quiz.description }}
     </div>
   </div>
-
 
 
   <!-- 基本資料 -->
   <div class="bodyCss">
     <p class="titleCss">填寫人基本資料</p>
     <hr class="divider">
-    <div class="basicCss">
+    <div>
       <p>姓名 : {{ userData.name }}</p>
       <p>手機 : {{ userData.phone }}</p>
       <p>E-mail : {{ userData.email }}</p>
@@ -32,39 +31,45 @@
   </div>
 
 
+
   <!-- 問題 -->
   <div class="bodyCss">
     <p class="titleCss">主要問題</p>
     <hr class="divider">
 
+
     <!-- 單選題 -->
     @for (ques of singleQues; track $index) {
       <div class="btnEditBox">{{ ques.questionId }}. {{ ques.name }}</div>
-      <div class="ansCss">
-        {{ ques.radioAnswer }}
-      </div>
+      @for (option of ques.optionsList; track $index) {
+        <div class="ansCss">
+          <input type="radio" name="{{ ques.questionId }}" [value]="option.code"
+            [checked]="option.code == ques.radioAnswer" [disabled]="true">
+            {{ option.optionName }}
+        </div>
+      }
     }
 
     <!-- 複選題 -->
     @for (ques of multiQuesArray; track $index) {
       <div class="btnEditBox">{{ ques.questionId }}. {{ ques.name }}</div>
       @for (option of ques.optionsList; track $index) {
-        @if (option.checkBoolean == true) {
         <div class="ansCss">
-          {{ option.optionName }}
+          <input type="checkbox" [checked]="option.checkBoolean" [disabled]="true">
+            {{ option.optionName }}
         </div>
-        }
       }
     }
 
     <!-- 文字題 -->
     @for (ques of textQues; track $index) {
-      <div class="btnEditBox">{{ ques.questionId }}. {{ ques.name }}</div>
-      <div class="ansCss">
-        {{ ques.textAnswer }}
-      </div>
+    <div class="btnEditBox">{{ ques.questionId }}. {{ ques.name }}</div>
+    <div class="ansCss">
+      <textarea [value]="ques.textAnswer" placeholder="請輸入答案" [disabled]="true"></textarea>
+    </div>
     }
   </div>
+
 
 
 
@@ -72,4 +77,3 @@
   <div class="allBtnCss">
     <button class="btn1Css" (click)="back()">上一頁</button>
   </div>
-

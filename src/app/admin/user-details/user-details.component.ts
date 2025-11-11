@@ -21,6 +21,7 @@ export class UserDetailsComponent {
   textQues: textQues[] = [];
   answer!: questionVoList[];
   theme!: theme;
+  selectedUserFeedback: any;
   readonly dialog = inject(MatDialog);
 
 
@@ -30,14 +31,22 @@ export class UserDetailsComponent {
 
 
   ngOnInit(): void {
-    // 從service抓資訊於此頁面
     this.theme = this.quesDataService.theme;
-    this.quiz = this.quesDataService.create.quiz;
-    this.userData = this.quesDataService.userData;
-    this.questionVoList = this.quesDataService.create.questionVoList;
-    this.singleQues = this.questionVoList.filter(item => item.type == 'S') as singleQues[];
-    this.multiQuesArray = this.questionVoList.filter(item => item.type == 'M') as multiQues[];
-    this.textQues = this.questionVoList.filter(item => item.type == 'T') as textQues[];
+    this.selectedUserFeedback = this.quesDataService.selectedFeedback;
+
+    if (this.selectedUserFeedback) {
+      this.quiz = this.selectedUserFeedback.quiz;
+      this.userData = this.selectedUserFeedback.user;
+
+      const questionVoList: questionVoList[] = this.selectedUserFeedback.questionVoList;
+      this.questionVoList = questionVoList;
+
+      this.singleQues = this.questionVoList.filter(item => item.type == 'S') as singleQues[];
+      this.multiQuesArray = this.questionVoList.filter(item => item.type == 'M') as multiQues[];
+      this.textQues = this.questionVoList.filter(item => item.type == 'T') as textQues[];
+    } else {
+      this.router.navigateByUrl('/feedback');
+    }
   }
 
   // 按鈕

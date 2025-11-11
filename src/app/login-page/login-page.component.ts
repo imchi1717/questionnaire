@@ -10,6 +10,7 @@ import { DialogRequiredComponent } from '../@dialog/dialog-required/dialog-requi
 import { CommonModule } from '@angular/common';
 import { HttpService } from '../@http-services/http.service';
 import { DialogFailComponent } from '../@dialog/dialog-fail/dialog-fail.component';
+import { DialogErrorComponent } from '../@dialog/dialog-error/dialog-error.component';
 
 @Component({
   selector: 'app-login-page',
@@ -84,21 +85,52 @@ export class LoginPageComponent {
             this.router.navigateByUrl('list');
           }
 
-        } else {
+        } else if (res.code == 400 || res.code == 404) {
           // 登入失敗，跳出 Dialog
           this.dialog.open(DialogFailComponent);
         }
       });
+}
+
+// 註冊按鈕
+signInbtn() {
+  // 有沒有填所有資料
+  // 單選或文字題：檢查 answer 是否為空
+  if (!this.userData.name || !this.userData.phone || !this.userData.email ||
+    !this.userData.age || !this.userAccount.account || !this.userAccount.password) {
+    this.dialog.open(DialogErrorComponent);
+    return;
   }
 
-  // 註冊按鈕
-  signInbtn() {
-    // 有沒有填所有資料
-    // 單選或文字題：檢查 answer 是否為空
-    if (!this.userData.name || !this.userData.phone || !this.userData.email || !this.userData.age) {
-      this.dialog.open(DialogRequiredComponent);
-      return;
-    }
-    this.dialog.open(DialogSignInComponent);
+  // 串接後端
+  let signData = {
+    account: this.userAccount.account,
+    password: this.userAccount.password,
+    name: this.userData.name,
+    phone: this.userData.phone,
+    email: this.userData.email,
+    age: this.userData.age,
+    admin: false,
   }
+
+  this.httpService.postApi('http://localhost:8080/quiz/register', signData).subscribe((res: any) => {
+    console.log(res);
+    console.log(signData);
+
+    if (res.code == 200) {
+      this.dialog.open(DialogSignInComponent);
+      // 清空欄位
+      this.userAccount.account = '';
+      this.userAccount.password = '';
+      this.userData.name = '';
+      this.userData.phone = '';
+      this.userData.email = '';
+      this.userData.age = null;
+      // 回到tab: 登入
+      this.selectedTab = 0
+    } else {
+      this.dialog.open(DialogErrorComponent);
+    }
+  });
+}
 }

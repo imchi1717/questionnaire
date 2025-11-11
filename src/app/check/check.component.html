@@ -41,11 +41,11 @@
     @for (ques of singleQues; track $index) {
       <div class="btnEditBox">{{ ques.questionId }}. {{ ques.name }}</div>
       @for (option of ques.optionsList; track $index) {
-        @if (ques.radioAnswer == option.code) {
-          <div class="ansCss">
+        <div class="ansCss">
+          <input type="radio" name="{{ ques.questionId }}" [value]="option.code"
+            [checked]="option.code == ques.radioAnswer" [disabled]="true">
             {{ option.optionName }}
-          </div>
-        }
+        </div>
       }
     }
 
@@ -53,11 +53,10 @@
     @for (ques of multiQuesArray; track $index) {
       <div class="btnEditBox">{{ ques.questionId }}. {{ ques.name }}</div>
       @for (option of ques.optionsList; track $index) {
-        @if (option.checkBoolean == true) {
-          <div class="ansCss">
+        <div class="ansCss">
+          <input type="checkbox" [checked]="option.checkBoolean" [disabled]="true">
             {{ option.optionName }}
-          </div>
-        }
+        </div>
       }
     }
 
@@ -65,10 +64,11 @@
     @for (ques of textQues; track $index) {
     <div class="btnEditBox">{{ ques.questionId }}. {{ ques.name }}</div>
     <div class="ansCss">
-      {{ ques.textAnswer }}
+      <textarea [value]="ques.textAnswer" placeholder="請輸入答案" [disabled]="true"></textarea>
     </div>
     }
   </div>
+
 
 
 

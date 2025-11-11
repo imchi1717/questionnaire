@@ -1,37 +1,81 @@
-.themeCss{
+/* 保持問卷標題和日期的樣式不變 */
+.themeCss {
   text-align: center;
-  max-width: 1000px;  /* 限制寬度 */
-  margin: 80px auto; /* 上下 80px，左右 auto 讓它置中 */
+  max-width: 1000px;
+  margin: 80px auto;
   font-size: 14px;
 }
-.dateCss{
+
+.dateCss {
   text-align: right;
   margin-right: 30px;
   margin-top: 20px;
   font-size: 14px;
 }
 
-.chartBox{
+/* --- 圖表區域修正 --- */
+.chartBox {
   width: 800px;
   display: flex;
-  align-items: center; /* 水平置中 */
+  /* 讓圖表區塊垂直置中 */
+  align-items: flex-start;
   margin: 20px auto;
+  /* 為了區分圖表與標題，建議加上邊框或間距 */
+  padding-bottom: 40px;
+  border-bottom: 1px solid #eee;
 }
-.chartCss{
-  margin-top: 80px;
+
+.chartCss {
+  margin-top: 40px;
+  /* 縮小與上一個圖表的間距 */
+  /* **核心修正：給圖表容器一個明確的寬高** */
+  width: 350px;
+  height: 350px;
+  /* 讓圖表在 .chartBox 內靠左顯示 */
+  flex-shrink: 0;
 }
-.chartIdCss{
+
+.chartCss canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.chartInfoCss {
+    /* 確保內容區塊能填滿剩餘空間，並讓內部元素靠左 */
+    padding-left: 50px; /* 保持與您原先 margin-left: 50px 的間距效果 */
+    display: flex;
+    flex-direction: column; /* 讓標題和選項垂直堆疊 */
+    justify-content: flex-start; /* 頂部對齊 */
+
+}
+
+.chartIdCss {
   font-size: 16px;
   font-weight: 600;
-  margin-left: 200px
+  /* 修正佈局：讓標題靠左對齊圖表數據區塊，而不是固定 200px */
+  margin-top: 40px;
+  margin-left: 50px;
+  margin-bottom: 20px;
 }
-.contentCss{
+
+.chartTextCss {
+  font-size: 14px;
+  font-weight: 450;
+  line-height: 25px;
+  margin-left: 50px;
+}
+
+/* 由於您的 HTML 中沒有 .contentCss，如果這是要顯示統計內容，應使用此類 */
+.contentCss {
   text-align: left;
-  margin-left: 220px;
+  margin-left: 50px;
+  /* 與標題對齊 */
   margin-top: 10px;
   font-size: 14px;
 }
-.btn1Css{
+
+/* --- 按鈕區域保持不變 --- */
+.btn1Css {
   height: 40px;
   width: 70px;
   border-radius: 30px;
@@ -44,13 +88,14 @@
   text-align: center;
   margin-right: 10px;
   margin-bottom: 70px;
-  cursor:pointer;
+  cursor: pointer;
 
   &:hover {
     color: #971D10;
     background: #fafafa;
   }
 }
-.btnBox{
+
+.btnBox {
   text-align: center;
 }

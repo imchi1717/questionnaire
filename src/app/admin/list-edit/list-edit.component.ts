@@ -50,6 +50,7 @@ export class ListEditComponent {
   displayedColumns: string[] = ['select', 'id', 'title', 'state', 'startDate', 'endDate', 'result', 'response'];
   dataSource = new MatTableDataSource<PeriodicElement>([]);
   selection = new SelectionModel<PeriodicElement>(true, []);
+  private initialData: PeriodicElement[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -61,8 +62,8 @@ export class ListEditComponent {
     this.httpService.getApi('http://localhost:8080/quiz/list')
       .subscribe((res: any) => {
         console.log(res);
-
         this.dataSource.data = res.quizList;
+        this.initialData = res.quizList; // 儲存原始資料
         this.updateState();
       });
   }
@@ -71,6 +72,15 @@ export class ListEditComponent {
   updateState() {
     let today = new Date();
     for (let data of this.dataSource.data) {
+
+      // 1. 檢查 'publish' 屬性
+      if (data.publish == false) {
+        data.state = "尚未發布";
+        data.result = "修改"; // 假設未發布時，結果/回應相關欄位可以設定為編輯/新增
+        data.response = "-";
+        continue; // 跳到下一筆資料
+      }
+
       let start = new Date(data.startDate);
       let end = new Date(data.endDate);
       if (today < start) {
@@ -102,7 +112,7 @@ export class ListEditComponent {
               startDate: element.startDate,
               endDate: element.endDate,
               description: element.description,
-              publish: false
+              publish: element.publish,
             },
             questionVoList: res.questionVoList
           };
@@ -110,48 +120,148 @@ export class ListEditComponent {
         }
       });
     } else if (element.state == '即將開始') {
-          let quizId = element.id;
-    let url = `http://localhost:8080/quiz/question_list?quizId=${quizId}`;
-    this.httpService.getApi(url).subscribe((res: any) => {
-      if (res.code === 200) {
-        // 將資料帶回 QuesNameEditComponent
-        this.quesDataService.create = {
-          quiz: {
-            id: element.id,
-            title: element.title,
-            startDate: element.startDate,
-            endDate: element.endDate,
-            description: element.description,
-            publish: false
-          },
-          questionVoList: res.questionVoList
-        };
-        this.quesDataService.editBoolean = true; // 設定為編輯模式
-        this.router.navigateByUrl('/quesNameEdit'); // 跳轉到問卷編輯頁
-      }
-    });
+      let quizId = element.id;
+      let url = `http://localhost:8080/quiz/question_list?quizId=${quizId}`;
+      this.httpService.getApi(url).subscribe((res: any) => {
+        if (res.code === 200) {
+          // 將資料帶回 QuesNameEditComponent
+          this.quesDataService.create = {
+            quiz: {
+              id: element.id,
+              title: element.title,
+              startDate: element.startDate,
+              endDate: element.endDate,
+              description: element.description,
+              publish: element.publish,
+            },
+            questionVoList: res.questionVoList
+          };
+          this.quesDataService.editBoolean = true; // 設定為編輯模式
+          this.router.navigateByUrl('/quesNameEdit'); // 跳轉到問卷編輯頁
+        }
+      });
+    } else if (element.state == '尚未發布') {
+      let quizId = element.id;
+      let url = `http://localhost:8080/quiz/question_list?quizId=${quizId}`;
+      this.httpService.getApi(url).subscribe((res: any) => {
+        if (res.code === 200) {
+          // 將資料帶回 QuesNameEditComponent
+          this.quesDataService.create = {
+            quiz: {
+              id: element.id,
+              title: element.title,
+              startDate: element.startDate,
+              endDate: element.endDate,
+              description: element.description,
+              publish: false
+            },
+            questionVoList: res.questionVoList
+          };
+          this.quesDataService.editBoolean = true; // 設定為編輯模式
+          this.router.navigateByUrl('/quesNameEdit'); // 跳轉到問卷編輯頁
+        }
+      });
     } else {
-      this.router.navigateByUrl('/chart');
+      let quizId = element.id;
+      let url = `http://localhost:8080/quiz/statistic?quizId=${quizId}`;
+      this.httpService.getApi(url).subscribe((res: any) => {
+        console.log(res);
+        if (res.code == 200) {
+          this.quesDataService.setStatisticData(res.statisticVo.questionCountVoList);
+          this.quesDataService.create = {
+            quiz: {
+              id: element.id,
+              title: element.title,
+              startDate: element.startDate,
+              endDate: element.endDate,
+              description: element.description || '',
+              publish: element.publish || false
+            },
+            questionVoList: []
+          };
+          this.router.navigateByUrl('/chart');
+        }
+      });
     }
   }
 
   goToPage(element: any) {
     if (element.state === '結束') {
+      this.quesDataService.create.quiz = {
+        id: element.id,
+        title: element.title,
+        startDate: element.startDate,
+        endDate: element.endDate,
+        // 由於 PeriodicElement 介面中沒有 description 和 publish，我們需要提供預設值
+        description: '', // 或從其他地方獲取
+        publish: false
+      };
       this.router.navigateByUrl('/feedback');
     }
   }
 
-  // 即時搜尋
-  searchInput() {
-    // 開一個空陣列儲存篩選的資料
-    let tidyData: PeriodicElement[] = [];
-    for (let data of this.dataSource.data) {
-      if (data.title.indexOf(this.inputData) != -1) {  // 有符合
-        tidyData.push(data);
-      }
+
+  // 篩選
+  searchBtn() {
+    // 從原始資料開始篩選
+    let filteredData: PeriodicElement[] = [...this.initialData];
+
+    // 1. 標題篩選 (如果 inputData 有值)
+    if (this.inputData) {
+      filteredData = filteredData.filter(item =>
+        item.title.toLowerCase().includes(this.inputData.toLowerCase())
+      );
     }
-    // 篩選完的資料等於表格目前的資料
-    this.dataSource.data = tidyData;
+
+    // 2. 開始時間篩選 (如果 sDate 有值)
+    if (this.sDate) {
+      filteredData = filteredData.filter(item =>
+        item.startDate >= this.sDate
+      );
+    }
+
+    // 3. 結束時間篩選 (如果 eDate 有值)
+    if (this.eDate) {
+      filteredData = filteredData.filter(item =>
+        item.endDate <= this.eDate // 假設你想要小於等於結束日期
+      );
+    }
+
+    // 4. 將篩選結果更新到 dataSource
+    this.dataSource.data = filteredData;
+
+    // 5. 重新計算狀態（雖然 updateState 已經在 ngOnInit 中跑過，但篩選後資料變動也建議重新跑一次）
+    this.updateState();
+
+    // 6. 清除選中的項目
+    this.selection.clear();
+
+    // 7. 確保分頁器在資料量改變後重新計算頁數
+    if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+    }
+  }
+
+  clearBtn() {
+    // 1. 清除篩選的輸入值
+    this.inputData = "";
+    this.sDate = "";
+    this.eDate = "";
+    this.selectData = ""; // 如果你有用 selectData (雖然在 HTML 中被註解掉了)
+
+    // 2. 將資料恢復為原始資料
+    this.dataSource.data = [...this.initialData];
+
+    // 3. 重新計算狀態
+    this.updateState();
+
+    // 4. 清除選中的項目
+    this.selection.clear();
+
+    // 5. 確保分頁器跳回第一頁
+    if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+    }
   }
 
   // 勾選欄
@@ -169,14 +279,7 @@ export class ListEditComponent {
       this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
-  // 時間篩選
-  changeSDate() {
-    this.dataSource.data = this.dataSource.data.filter(item => item.startDate >= this.sDate);
-  }
 
-  changeEDate() {
-    this.dataSource.data = this.dataSource.data.filter(item => item.endDate >= this.eDate);
-  }
 
 
   // 刪除icon
@@ -217,6 +320,7 @@ export class ListEditComponent {
 export interface PeriodicElement {
   title: string;
   id: number;
+  publish: boolean;
   state: string;
   startDate: string;
   endDate: string;

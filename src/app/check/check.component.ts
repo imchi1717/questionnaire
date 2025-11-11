@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogSendComponent } from '../@dialog/dialog-send/dialog-send.component';
-import { quiz, userData, multiQues, singleQues, textQues, questionVoList, theme, create, answerList } from '../@interface/ques-interface';
+import { quiz, userData, multiQues, singleQues, textQues, questionVoList, theme, create } from '../@interface/ques-interface';
 import { HttpService } from '../@http-services/http.service';
 
 
@@ -28,7 +28,6 @@ export class CheckComponent {
   multiQuesArray: multiQues[] = [];
   textQues: textQues[] = [];
   answer!: questionVoList[];
-  answerList!: answerList;
   readonly dialog = inject(MatDialog);
 
 
@@ -45,7 +44,6 @@ export class CheckComponent {
     this.quiz = this.quesDataService.create.quiz;
     this.userData = this.quesDataService.userData;
     this.questionVoList = this.quesDataService.create.questionVoList;
-    this.answerList = this.quesDataService.answerList;
     this.singleQues = this.questionVoList.filter(item => item.type == 'S') as singleQues[];
     this.multiQuesArray = this.questionVoList.filter(item => item.type == 'M') as multiQues[];
     this.textQues = this.questionVoList.filter(item => item.type == 'T') as textQues[];
@@ -95,8 +93,8 @@ export class CheckComponent {
     };
 
     this.httpService.postApi('http://localhost:8080/quiz/fillin', fillin).subscribe((res: any) => {
-      console.log(fillin);
       console.log(res);
+      this.quesDataService.create = res;
     });
 
     // 逐題清空答案

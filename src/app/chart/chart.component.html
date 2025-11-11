@@ -9,17 +9,26 @@
   </div>
 </div>
 
+@for (questionVo of questionVoList; track $index) {
+  @if (questionVo.type !== 'T' && questionVo.optionsCountList?.length > 0) {
+    <div class="chartBox">
+      <div class="chartCss">
+        <canvas id="{{ questionVo.questionId }}"></canvas>
+      </div>
 
-@for (chartData of questionVoList; track $index) {
-<div class="chartBox">
-  <div class="chartCss"><canvas id="{{ chartData.questionId }}"></canvas></div>
-  <div>
-    <div class="chartIdCss">{{ chartData.questionId }}. {{ chartData.name }}</div>
-    <div class="contentCss">慢慢享受: 30</div>
-    <div class="contentCss">速速吃完: 50</div>
-  </div>
-</div>
+      <div class="chartInfoCss">
+        <div class="chartIdCss">{{ questionVo.questionId }}. {{ questionVo.name }}</div>
+
+        @for (optionStat of questionVo.optionsCountList; track optionStat.code) {
+          <div class="chartTextCss">{{ optionStat.optionName }} : {{ optionStat.count }}次</div>
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="chartIdCss">{{ questionVo.questionId }}. {{ questionVo.name }} (不繪製圖表)</div>
+  }
 }
+
 <div class="btnBox">
   <button class="btn1Css" (click)="backPage()">上一頁</button>
 </div>

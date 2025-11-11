@@ -1,4 +1,4 @@
-import { questionVoList, theme, answerList } from './../@interface/ques-interface';
+import { questionVoList, theme, } from './../@interface/ques-interface';
 import { Injectable } from '@angular/core';
 import { userData, userAccount, create } from '../@interface/ques-interface';
 import { BehaviorSubject } from 'rxjs';
@@ -11,10 +11,9 @@ export class QuesDataService {
 
   constructor(private httpService: HttpService) { }
 
-  // 一個問卷陣列，每份問卷裡有題目
-  editBoolean: boolean = false;
-  // 暫存目前被點擊的問卷 ID
-  selectedQuizId!: number;
+  editBoolean: boolean = false;  // 一個問卷陣列，每份問卷裡有題目
+  selectedQuizId!: number;  // 暫存目前被點擊的問卷 ID
+  selectedFeedback: any; // 儲存單一使用者完整回饋資料
 
   // 個人檔案假資料
   userData: userData = {
@@ -90,16 +89,14 @@ export class QuesDataService {
     ]
   }
 
-  answerList: answerList = {
-    questionId: 2,
-    optionsList: [
-      { code: 1, optionName: '', checkBoolean: false },
-      { code: 2, optionName: '', checkBoolean: false },
-      { code: 3, optionName: '', checkBoolean: false },
-    ],
-    radioAnswer: 0,
-    textAnswer: "",
+  // 儲存統計數據
+  private statisticData$ = new BehaviorSubject<any[]>([]);
+  _statisticData$ = this.statisticData$.asObservable();
+
+  setStatisticData(data: any[]) {
+    this.statisticData$.next(data);
   }
+
 
   // 即時更新題目
   private questionList$ = new BehaviorSubject<questionVoList[]>([]);

@@ -117,12 +117,16 @@ export class QuesNameEditComponent {
 
   // 編輯題目icon
   editBtn(index: number) {
+
     // 取得使用者要編輯的題目 index是題目陣列位置
     let ques = this.questionVoList[index];
     // 將要編輯的欄位帶回表單
     this.name = ques.name;
     this.quesType = ques.type;
     this.required = ques.required;
+
+    // 跳到stepper第二步
+    this.currentStep = 1;
 
     // 題目選項的欄位帶回表單
     if (ques.type == "S") {
@@ -141,13 +145,14 @@ export class QuesNameEditComponent {
     }
     // 正在編輯第 index 筆題目
     this.editingIndex = index;
-    // 跳到stepper第二步
-    this.currentStep = 1;
+
   };
 
 
   // 新增題目按鈕
   addQuesBtn() {
+    // 跳到stepper第二步
+    this.currentStep = 1;
     // 預防空白標題
     if (!this.name.trim()) {
       return;
@@ -224,6 +229,25 @@ export class QuesNameEditComponent {
 
   // 返回按鈕
   backPage() {
+    this.quiz = {
+        id: 0,
+        title: '',
+        description: '',
+        startDate: '',
+        endDate: '',
+        publish: false,
+    };
+    this.optionInput = ['', ''];
+    this.extraOptions = [];
+    this.questionVoList = [];
+    this.quesType = ''; // 假設您需要清空 quesType
+    this.name = '';
+    this.required = true;
+    this.newQues = {} as questionVoList; // 依據您的實際型別初始化
+    this.editingIndex = null;
+    this.currentStep = 0;
+    this.quesDataService.updateQuestionList([]);
+    this.quesDataService.create.quiz = this.quiz
     this.router.navigateByUrl('/listEdit')
   }
 
